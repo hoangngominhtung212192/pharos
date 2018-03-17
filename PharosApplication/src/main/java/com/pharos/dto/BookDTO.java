@@ -1,6 +1,5 @@
 package com.pharos.dto;
 
-import java.io.File;
 import java.util.Date;
 
 public class BookDTO {
