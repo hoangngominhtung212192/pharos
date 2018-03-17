@@ -3,9 +3,11 @@
  */
 package com.pharos.repository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
-import com.pharos.dto.BookDTO;
+import com.pharos.entity.Book;
 
 /**
  * @author Tung Hoang Ngo Minh
@@ -13,6 +15,11 @@ import com.pharos.dto.BookDTO;
  */
 
 @Repository
-public interface BookDao extends GenericDao<BookDTO, Integer> {
+public interface BookDao extends GenericDao<Book, Integer> {
 	
+	/**
+	 * 
+	 * @return
+	 */
+	List<Book> getAllBooks();
 }
