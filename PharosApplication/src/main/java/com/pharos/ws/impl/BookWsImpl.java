@@ -1,7 +1,9 @@
 package com.pharos.ws.impl;
 
-import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,10 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pharos.dto.BookDTO;
 import com.pharos.service.BookStoreService;
 import com.pharos.service.UploadBookService;
 import com.pharos.ws.BookWS;
-
 
 @Service
 @Transactional
@@ -26,20 +28,30 @@ public class BookWsImpl implements BookWS {
 
 	@Autowired
 	private BookStoreService bookStoreService;
-	
+
 	@Override
 	public ResponseEntity<Integer> createBook(MultipartFile file) {
 		uploadBook.saveBook(file);
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pharos.ws.BookWS#getAllBooks()
 	 */
 	@Override
-	public void getAllBooks() {
-		bookStoreService.test();
+	public List<BookDTO> getAllBooks(int memberId) {
+
+		List<BookDTO> listBooks = new ArrayList<BookDTO>();
 		
+		try {
+			listBooks = bookStoreService.getAllBooks(memberId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return listBooks;
 	}
 
 }

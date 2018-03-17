@@ -21,5 +21,5 @@ public interface BookDao extends GenericDao<Book, Integer> {
 	 * 
 	 * @return
 	 */
-	List<Book> getAllBooks();
+	List<Book> getAllBooks(int memberId);
 }

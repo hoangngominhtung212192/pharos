@@ -15,7 +15,7 @@ public class BookDTO {
 	int authorId;
 	String pdfLocate;
 	Date publishDate;
-	BufferedImage image;
+	byte[] image;
 
 	public BookDTO(String tiltle, String description, int viewCount, float price, int voteCount, int statusId,
 			int languageId, String pdfLocate, Date publishDate, int authorId) {
@@ -49,7 +49,7 @@ public class BookDTO {
 	}
 
 	public BookDTO(int id, String tiltle, String description, int viewCount, float price, int voteCount, int statusId,
-			int languageId, String pdfLocate, Date publishDate, BufferedImage image, int authorId) {
+			int languageId, String pdfLocate, Date publishDate, byte[] image, int authorId) {
 		super();
 		this.id = id;
 		this.tiltle = tiltle;
@@ -162,7 +162,7 @@ public class BookDTO {
 	/**
 	 * @return the image
 	 */
-	public BufferedImage getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
@@ -170,7 +170,7 @@ public class BookDTO {
 	 * @param image
 	 *            the image to set
 	 */
-	public void setImage(BufferedImage image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 
