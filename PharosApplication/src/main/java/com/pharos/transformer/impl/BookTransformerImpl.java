@@ -5,6 +5,8 @@ package com.pharos.transformer.impl;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Service;
+
 import com.pharos.dto.BookDTO;
 import com.pharos.entity.Author;
 import com.pharos.entity.Book;
@@ -16,6 +18,8 @@ import com.pharos.transformer.BookTransformer;
  * @author Tung Hoang Ngo Minh
  *
  */
+
+@Service
 public class BookTransformerImpl implements BookTransformer {
 
 	/* (non-Javadoc)
