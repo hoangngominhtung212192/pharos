@@ -34,7 +34,7 @@
 		<velocity.version>1.7</velocity.version>
 		<maven.test.skip>false</maven.test.skip>
 		<swagger.version>3.1.12</swagger.version>
-		<springfox.version>2.6.1</springfox.version>
+		<springfox.version>2.6.1</springfox.version>	
 	</properties>
 
 	<dependencies>
