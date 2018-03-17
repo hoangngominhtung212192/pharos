@@ -1,5 +1,6 @@
 package com.pharos.ws;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 
 import org.springframework.http.ResponseEntity;
@@ -14,4 +15,8 @@ public interface BookWS {
 	@POST
 	@RequestMapping(value="book/upload")
 	ResponseEntity<Integer> createBook(@RequestParam("file") MultipartFile file);
+	
+	@GET
+	@RequestMapping(value="/book/getAllBooks")
+	void getAllBooks();
 }

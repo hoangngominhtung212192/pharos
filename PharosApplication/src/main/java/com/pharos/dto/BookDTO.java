@@ -1,5 +1,6 @@
 package com.pharos.dto;
 
+import java.awt.image.BufferedImage;
 import java.util.Date;
 
 public class BookDTO {
@@ -11,11 +12,13 @@ public class BookDTO {
 	int voteCount;
 	int statusId;
 	int languageId;
+	int authorId;
 	String pdfLocate;
 	Date publishDate;
+	BufferedImage image;
 
 	public BookDTO(String tiltle, String description, int viewCount, float price, int voteCount, int statusId,
-			int languageId, String pdfLocate, Date publishDate) {
+			int languageId, String pdfLocate, Date publishDate, int authorId) {
 		super();
 		this.tiltle = tiltle;
 		this.description = description;
@@ -26,10 +29,11 @@ public class BookDTO {
 		this.languageId = languageId;
 		this.pdfLocate = pdfLocate;
 		this.publishDate = publishDate;
+		this.authorId = authorId;
 	}
-	
+
 	public BookDTO(int id, String tiltle, String description, int viewCount, float price, int voteCount, int statusId,
-			int languageId, String pdfLocate, Date publishDate) {
+			int languageId, String pdfLocate, Date publishDate, int authorId) {
 		super();
 		this.id = id;
 		this.tiltle = tiltle;
@@ -41,6 +45,31 @@ public class BookDTO {
 		this.languageId = languageId;
 		this.pdfLocate = pdfLocate;
 		this.publishDate = publishDate;
+		this.authorId = authorId;
+	}
+
+	public BookDTO(int id, String tiltle, String description, int viewCount, float price, int voteCount, int statusId,
+			int languageId, String pdfLocate, Date publishDate, BufferedImage image, int authorId) {
+		super();
+		this.id = id;
+		this.tiltle = tiltle;
+		this.description = description;
+		this.viewCount = viewCount;
+		this.price = price;
+		this.voteCount = voteCount;
+		this.statusId = statusId;
+		this.languageId = languageId;
+		this.pdfLocate = pdfLocate;
+		this.publishDate = publishDate;
+		this.image = image;
+		this.authorId = authorId;
+	}
+	
+	/**
+	 * 
+	 */
+	public BookDTO() {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -49,14 +78,15 @@ public class BookDTO {
 	public int getId() {
 		return id;
 	}
-	
+
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getTiltle() {
 		return tiltle;
 	}
@@ -129,4 +159,34 @@ public class BookDTO {
 		this.publishDate = publishDate;
 	}
 
+	/**
+	 * @return the image
+	 */
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	/**
+	 * @param image
+	 *            the image to set
+	 */
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
+
+	/**
+	 * @return the authorId
+	 */
+	public int getAuthorId() {
+		return authorId;
+	}
+
+	/**
+	 * @param authorId the authorId to set
+	 */
+	public void setAuthorId(int authorId) {
+		this.authorId = authorId;
+	}
+	
+	
 }

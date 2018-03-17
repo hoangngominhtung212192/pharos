@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pharos.service.BookStoreService;
 import com.pharos.service.UploadBookService;
 import com.pharos.ws.BookWS;
 
@@ -23,10 +24,22 @@ public class BookWsImpl implements BookWS {
 	@Autowired
 	private UploadBookService uploadBook;
 
+	@Autowired
+	private BookStoreService bookStoreService;
+	
 	@Override
 	public ResponseEntity<Integer> createBook(MultipartFile file) {
 		uploadBook.saveBook(file);
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.pharos.ws.BookWS#getAllBooks()
+	 */
+	@Override
+	public void getAllBooks() {
+		bookStoreService.test();
+		
 	}
 
 }
