@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 
 public class BookDTO {
+	int id;
 	String tiltle;
 	String description;
 	int viewCount;
@@ -27,7 +28,36 @@ public class BookDTO {
 		this.pdfLocate = pdfLocate;
 		this.publishDate = publishDate;
 	}
+	
+	public BookDTO(int id, String tiltle, String description, int viewCount, float price, int voteCount, int statusId,
+			int languageId, String pdfLocate, Date publishDate) {
+		super();
+		this.id = id;
+		this.tiltle = tiltle;
+		this.description = description;
+		this.viewCount = viewCount;
+		this.price = price;
+		this.voteCount = voteCount;
+		this.statusId = statusId;
+		this.languageId = languageId;
+		this.pdfLocate = pdfLocate;
+		this.publishDate = publishDate;
+	}
 
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+	
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getTiltle() {
 		return tiltle;
 	}
