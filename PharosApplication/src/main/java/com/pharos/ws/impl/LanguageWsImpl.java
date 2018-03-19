@@ -33,7 +33,7 @@ public class LanguageWsImpl implements LanguageWS {
 		LanguageDTO dto = new LanguageDTO();
 		
 		dto.setId(0);
-		dto.setName("Laos");
+		dto.setName("Success");
 		
 		LOGGER.info("Begin create Language with dto: " + dto);
 		int status = 0;
