@@ -33,7 +33,7 @@ public class BookTransformerImpl implements BookTransformer {
 		if (book != null) {
 			dto = new BookDTO();
 			dto.setId(book.getId());
-			dto.setTiltle(book.getTitle());
+			dto.setTitle(book.getTitle());
 			dto.setDescription(book.getDescription());
 			dto.setViewCount(book.getViewCount());
 			dto.setPrice(book.getPrice());
@@ -60,7 +60,7 @@ public class BookTransformerImpl implements BookTransformer {
 		
 		if (dto != null) {
 			book = new Book();
-			book.setTitle(dto.getTiltle());
+			book.setTitle(dto.getTitle());
 			book.setDescription(dto.getDescription());
 			book.setViewCount(dto.getViewCount());
 			book.setVoteCount(dto.getVoteCount());
