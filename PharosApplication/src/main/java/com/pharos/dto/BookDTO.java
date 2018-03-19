@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class BookDTO {
 	int id;
-	String tiltle;
+	String title;
 	String description;
 	int viewCount;
 	float price;
@@ -17,10 +17,10 @@ public class BookDTO {
 	Date publishDate;
 	byte[] image;
 
-	public BookDTO(String tiltle, String description, int viewCount, float price, int voteCount, int statusId,
+	public BookDTO(String title, String description, int viewCount, float price, int voteCount, int statusId,
 			int languageId, String pdfLocate, Date publishDate, int authorId) {
 		super();
-		this.tiltle = tiltle;
+		this.title = title;
 		this.description = description;
 		this.viewCount = viewCount;
 		this.price = price;
@@ -32,11 +32,11 @@ public class BookDTO {
 		this.authorId = authorId;
 	}
 
-	public BookDTO(int id, String tiltle, String description, int viewCount, float price, int voteCount, int statusId,
+	public BookDTO(int id, String title, String description, int viewCount, float price, int voteCount, int statusId,
 			int languageId, String pdfLocate, Date publishDate, int authorId) {
 		super();
 		this.id = id;
-		this.tiltle = tiltle;
+		this.title = title;
 		this.description = description;
 		this.viewCount = viewCount;
 		this.price = price;
@@ -48,11 +48,11 @@ public class BookDTO {
 		this.authorId = authorId;
 	}
 
-	public BookDTO(int id, String tiltle, String description, int viewCount, float price, int voteCount, int statusId,
+	public BookDTO(int id, String title, String description, int viewCount, float price, int voteCount, int statusId,
 			int languageId, String pdfLocate, Date publishDate, byte[] image, int authorId) {
 		super();
 		this.id = id;
-		this.tiltle = tiltle;
+		this.title = title;
 		this.description = description;
 		this.viewCount = viewCount;
 		this.price = price;
@@ -87,12 +87,12 @@ public class BookDTO {
 		this.id = id;
 	}
 
-	public String getTiltle() {
-		return tiltle;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTiltle(String tiltle) {
-		this.tiltle = tiltle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getDescription() {
