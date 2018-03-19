@@ -37,6 +37,8 @@ public class AccountServiceImpl implements AccountService {
 		
 		Account account = accountTransformer.convertToEntity(dto);
 		
+		AccountDTO existedAccount = null;
+		existedAccount = 
 		
 	}
 
