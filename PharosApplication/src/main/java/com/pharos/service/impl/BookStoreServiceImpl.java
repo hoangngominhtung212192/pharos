@@ -25,7 +25,6 @@ import com.pharos.exception.BusinessException;
 import com.pharos.repository.BookDao;
 import com.pharos.service.BookStoreService;
 import com.pharos.transformer.BookTransformer;
-import com.sun.mail.iap.ByteArray;
 
 /**
  * @author Tung Hoang Ngo Minh
@@ -85,7 +84,7 @@ public class BookStoreServiceImpl implements BookStoreService {
 		// }
 		try {
 			List<Book> listBooks = bookDao.getAllBooks(memberId);
-
+			
 			if (listBooks != null) {
 				List<BookDTO> listBookDTO = new ArrayList<BookDTO>();
 
@@ -95,7 +94,14 @@ public class BookStoreServiceImpl implements BookStoreService {
 					for (Book book : listBooks) {
 						
 						String sourceDir = book.getPdf();
+						//String dest = "C:/images/";
 						File sourceFile = new File(sourceDir);
+//						File des = new File(dest);
+//						if (!des.exists()) {
+//							des.mkdir();
+//						}
+						
+						//String fileName = sourceFile.getName().replace(".pdf", "").replace("C:/books/", "");						
 						
 						if (sourceFile.exists()) {
 							PDDocument document = PDDocument.load(sourceDir);
@@ -106,13 +112,17 @@ public class BookStoreServiceImpl implements BookStoreService {
 
 							ByteArrayOutputStream bao = new ByteArrayOutputStream();
 							
+							//File outputfile = new File(dest + fileName + "_" + ".jpg");
+							
 							ImageIO.write(image, "jpg", bao);
 							
 							array = bao.toByteArray();
 							
+							bao.close();
+							
 							document.close();
 						} else {
-							System.err.println(sourceFile.getName() + " File does not exist");
+							System.err.println(sourceFile.getName() + "--> File does not exist");
 						}
 
 						BookDTO dto = bookTransformer.convertToDTO(book);

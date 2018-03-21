@@ -14,6 +14,12 @@ public class AccountDTO {
 	int roleId;
 	boolean enable;
 	
+	
+	
+	public AccountDTO() {
+		super();
+	}
+
 	public AccountDTO(int id, String username, String password, int roleId, boolean enable) {
 		super();
 		this.id = id;
