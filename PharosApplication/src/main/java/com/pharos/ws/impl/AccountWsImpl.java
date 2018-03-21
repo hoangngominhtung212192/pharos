@@ -21,11 +21,27 @@ public class AccountWsImpl implements AccountWS {
 	
 	@Override
 	public ResponseEntity<String> checkLogin(AccountDTO dto) {
-		String username = dto.getUsername();
-        String password = dto.getPassword();
+		String username = "tamndse62381";
+        String password = "ac";
+        String message = "";
         LOGGER.info("Begin login with username + password: {}", username + " -  " + password);
+        try {
+        	dto = accountService.login(username, password);
+        	if(dto != null) {
+        		message = "login successful";
+        	}else {
+        		message = "login FAIL";
+        	}
+        	
+        }catch(Exception e) {
+        	e.printStackTrace();
+        	message="login fail SML";
+        }
 		
-		return null;
+        
+        LOGGER.info("End login with username + password: {}", username + " -  " + password);
+        ResponseEntity<String> reEn = new ResponseEntity<String>(message , HttpStatus.OK);
+        return reEn;
 	}
 
 	@Override

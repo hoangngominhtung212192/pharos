@@ -76,4 +76,22 @@ public class AccountServiceImpl implements AccountService {
 		return accountDTO;
 	}
 
+	@Override
+	public AccountDTO login(String username, String password) {
+		LOGGER.info("Begin login in Account Service with username - password: {}", username + " - " + password);
+		AccountDTO accountDTO = null;
+		passwordUtil = new EncrytedPasswordUtils();
+		if (username != null) {
+			accountDTO = findAccountByUsername(username);
+			if (passwordUtil.compare(password, accountDTO.getPassword())) {
+				return accountDTO;
+			} else {
+				return null;
+			}
+
+		}
+		LOGGER.info("End login in Account Service with result: {}", accountDTO);
+		return accountDTO;
+	}
+
 }

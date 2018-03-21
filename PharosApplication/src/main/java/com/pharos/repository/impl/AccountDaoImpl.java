@@ -17,12 +17,6 @@ public class AccountDaoImpl extends GenericDaoImpl<Account, Integer> implements 
 
 	private static final Logger LOGGER = LogManager.getLogger(AccountDaoImpl.class);
 
-	@Override
-	public boolean checkLogin(String username, String password) {
-		LOGGER.info("Begin checkLogin in Account DAO with username: {}", username);
-
-		return false;
-	}
 
 	@Override
 	public Account registration(Account account) {
