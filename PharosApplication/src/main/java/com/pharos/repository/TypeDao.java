@@ -10,5 +10,5 @@ import com.pharos.entity.Type;
 @Repository
 public interface TypeDao extends GenericDao<Type, Integer>{
 	
-	List<Type> loadType();
+	
 }

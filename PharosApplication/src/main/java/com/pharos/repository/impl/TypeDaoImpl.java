@@ -23,15 +23,4 @@ public class TypeDaoImpl extends GenericDaoImpl<Type, Integer> implements TypeDa
 	public TypeDaoImpl() {
 		super(Type.class);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.pharos.repository.GenericDao#getAll()
-	 */
-	@Override
-	public List<Type> loadType() {
-		List<Type> typeList=getAll();
-		return typeList;
-	}
-	
-
 }
