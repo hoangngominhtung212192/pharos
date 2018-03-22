@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
@@ -23,8 +24,7 @@ import com.pharos.ws.BookWS;
 
 import springfox.documentation.spring.web.json.Json;
 
-@Service
-@Transactional
+@RestController
 public class BookWsImpl implements BookWS {
 	private static final Logger LOGGER = LogManager.getLogger(BookWsImpl.class);
 	
