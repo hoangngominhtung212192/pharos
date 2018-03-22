@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonObject;
 import com.pharos.dto.BookDTO;
+
+import springfox.documentation.spring.web.json.Json;
 
 @RestController
 public interface BookWS {
 
 	@POST
 	@RequestMapping(value="book/upload")
-	ResponseEntity<Integer> createBook(@RequestParam("file") MultipartFile file);
+	ResponseEntity<JsonObject> createBook(@RequestParam("file") MultipartFile file, @RequestParam("book_info") String bookInfo);
 	
 	@GET
 	@RequestMapping(value="/book/getAllBooks")

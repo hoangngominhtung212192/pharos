@@ -23,7 +23,7 @@ public class TypeDaoImpl extends GenericDaoImpl<Type, Integer> implements TypeDa
 	public TypeDaoImpl() {
 		super(Type.class);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.pharos.repository.GenericDao#getAll()
 	 */
@@ -44,5 +44,6 @@ public class TypeDaoImpl extends GenericDaoImpl<Type, Integer> implements TypeDa
 		return type.getName();
 	}
 	
+
 
 }

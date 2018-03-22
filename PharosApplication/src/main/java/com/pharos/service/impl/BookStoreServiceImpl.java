@@ -95,14 +95,28 @@ public class BookStoreServiceImpl implements BookStoreService {
 				}
 
 				LOGGER.info("End getAllBooks with result: " + listBookDTO);
-				
+
 				return listBookDTO;
 			}
 		} catch (Exception e) {
 			LOGGER.error("BookStoreServiceImpl error: " + e.getMessage());
-		}		
-		
+		}
+
 		return null;
+	}
+
+	@Override
+	public boolean saveBookInfo(BookDTO bookDTO) {
+		boolean valid = true;
+
+		Book book = bookTransformer.convertToEntity(bookDTO);
+
+		try {
+			bookDao.create(book);
+		} catch (Exception e) {
+			valid = false;
+		}
+		return valid;
 	}
 
 }

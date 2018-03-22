@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pharos.dto.TypeDTO;
 import com.pharos.entity.Booktype;
 import com.pharos.entity.Type;
 import com.pharos.exception.BusinessException;
@@ -69,6 +70,29 @@ public class BookTypeServiceImpl implements BookTypeService {
 		}
 						
 		return null;
+	}
+
+	@Override
+	public List<TypeDTO> loadTypes() {	
+		List<Type> typeDaoList = typeDao.getAll();
+		LOGGER.info("Get type from database: {}",typeDaoList);
+		
+		List<TypeDTO> typeDtoList = null;
+
+		if (typeDaoList != null && typeDaoList.size() > 0) {
+			typeDtoList=new ArrayList<>();
+			
+			for (Type typeDao : typeDaoList) {
+				TypeDTO typeDTO = typeTransformer.convertToDto(typeDao);
+				if (typeDTO != null) {
+					typeDtoList.add(typeDTO);
+				}
+			}
+		}
+		
+		LOGGER.info("End loadTypes with result: " + typeDtoList);
+
+		return typeDtoList;
 	}
 	
 }

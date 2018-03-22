@@ -14,10 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonObject;
 import com.pharos.dto.BookDTO;
 import com.pharos.service.BookStoreService;
 import com.pharos.service.BookTypeService;
 import com.pharos.service.UploadBookService;
+import com.pharos.transformer.BookTransformer;
 import com.pharos.ws.BookWS;
 
 @RestController
@@ -33,10 +35,40 @@ public class BookWsImpl implements BookWS {
 	@Autowired
 	private BookTypeService bookTypeService;
 
+	@Autowired
+	private BookTransformer bookTrans;
+	
 	@Override
-	public ResponseEntity<Integer> createBook(MultipartFile file) {
-		uploadBook.saveBook(file);
-		return null;
+	public ResponseEntity<JsonObject> createBook(MultipartFile file, String book_info) {
+		JsonObject jsonObject=new JsonObject();
+		ResponseEntity<JsonObject> response;
+		
+		boolean sucess=true;
+		try {
+		String pdfLocate=uploadBook.saveBook(file);
+		BookDTO dto=bookTrans.convertDataToDto(book_info, pdfLocate);
+		dto.setViewCount(0);
+		dto.setVoteCount(0);
+		dto.setPdfLocate(pdfLocate);
+		
+		bookStoreService.saveBookInfo(dto);
+		}catch (Exception e) {
+			e.printStackTrace();
+			sucess=false;
+		}
+		
+		if (sucess) {
+			jsonObject.addProperty("status", "OK");
+			jsonObject.addProperty("Message", "Save success");
+			response = new ResponseEntity<JsonObject>(jsonObject, HttpStatus.OK);
+		}else {
+			jsonObject.addProperty("status", "False");
+			jsonObject.addProperty("Message", "Save false");
+			response = new ResponseEntity<JsonObject>(jsonObject, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
+		return  response;
 	}
 
 	/*
@@ -62,6 +94,7 @@ public class BookWsImpl implements BookWS {
 		return listBooks;
 	}
 
+	
 	/* (non-Javadoc)
 	 * @see com.pharos.ws.BookWS#getAllTypes(int)
 	 */

@@ -18,4 +18,6 @@ public interface BookTransformer {
 	BookDTO convertToDTO(Book book);
 	
 	Book convertToEntity(BookDTO dto);
+	
+	BookDTO convertDataToDto(String data, String pdfLocate);
 }
