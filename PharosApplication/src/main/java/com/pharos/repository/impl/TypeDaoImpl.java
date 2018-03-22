@@ -32,6 +32,17 @@ public class TypeDaoImpl extends GenericDaoImpl<Type, Integer> implements TypeDa
 		List<Type> typeList=getAll();
 		return typeList;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.pharos.repository.TypeDao#getNameById(int)
+	 */
+	@Override
+	public String getNameById(int id) {
+		
+		Type type = this.read(id);
+		
+		return type.getName();
+	}
 	
 
 }

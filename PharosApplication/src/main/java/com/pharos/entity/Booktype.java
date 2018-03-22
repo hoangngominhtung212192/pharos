@@ -17,9 +17,15 @@ public class Booktype implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	private int bookID;
+	//bi-directional many-to-one association to Book
+	@ManyToOne
+	@JoinColumn(name="bookID")
+	private Book book;
 
-	private int typeID;
+	//bi-directional many-to-one association to Type
+	@ManyToOne
+	@JoinColumn(name="typeID")
+	private Type type;
 
 	public Booktype() {
 	}
@@ -32,20 +38,20 @@ public class Booktype implements Serializable {
 		this.id = id;
 	}
 
-	public int getBookID() {
-		return this.bookID;
+	public Book getBook() {
+		return this.book;
 	}
 
-	public void setBookID(int bookID) {
-		this.bookID = bookID;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
-	public int getTypeID() {
-		return this.typeID;
+	public Type getType() {
+		return this.type;
 	}
 
-	public void setTypeID(int typeID) {
-		this.typeID = typeID;
+	public void setType(Type type) {
+		this.type = type;
 	}
 
 }

@@ -50,76 +50,38 @@ public class BookStoreServiceImpl implements BookStoreService {
 	 */
 	@Override
 	public List<BookDTO> getAllBooks(int memberId) throws BusinessException {
-		// String sourceDir = "C:/Users/Tung Hoang Ngo Minh/Downloads/pdf/Vo
-		// Han Tuong Lai - Zhttty.pdf";
-		// String destinationDir = "C:/Users/Tung Hoang Ngo
-		// Minh/Documents/Image/";
-		// File sourceFile = new File(sourceDir);
-		// File destinationFile = new File(destinationDir);
-		// if (!destinationFile.exists()) {
-		// destinationFile.mkdir();
-		// System.out.println("Folder Created -> " +
-		// destinationFile.getAbsolutePath());
-		// }
-		// if (sourceFile.exists()) {
-		// PDDocument document = PDDocument.load(sourceDir);
-		// @SuppressWarnings("unchecked")
-		// List<PDPage> list = document.getDocumentCatalog().getAllPages();
-		//
-		// String fileName = sourceFile.getName().replace(".pdf", "");
-		// int pageNumber = 1;
-		// for (PDPage page : list) {
-		// BufferedImage image = page.convertToImage();
-		// File outputfile = new File(destinationDir + fileName + "_" +
-		// pageNumber + ".png");
-		// ImageIO.write(image, "png", outputfile);
-		// pageNumber++;
-		// }
-		// document.close();
-		// System.out.println("Image saved at -> " +
-		// destinationFile.getAbsolutePath());
-		// } else {
-		// System.err.println(sourceFile.getName() + " File does not
-		// exist");
-		// }
+
+		LOGGER.info("Begin getAllBooks with memberId: " + memberId);
+
 		try {
 			List<Book> listBooks = bookDao.getAllBooks(memberId);
-			
+
 			if (listBooks != null) {
 				List<BookDTO> listBookDTO = new ArrayList<BookDTO>();
 
 				byte[] array = null;
-				
+
 				if (listBooks.size() > 0) {
 					for (Book book : listBooks) {
-						
+
 						String sourceDir = book.getPdf();
-						//String dest = "C:/images/";
 						File sourceFile = new File(sourceDir);
-//						File des = new File(dest);
-//						if (!des.exists()) {
-//							des.mkdir();
-//						}
-						
-						//String fileName = sourceFile.getName().replace(".pdf", "").replace("C:/books/", "");						
-						
+
 						if (sourceFile.exists()) {
 							PDDocument document = PDDocument.load(sourceDir);
-							
+
 							PDPage firstPage = (PDPage) document.getDocumentCatalog().getAllPages().get(0);
 
 							BufferedImage image = firstPage.convertToImage();
 
 							ByteArrayOutputStream bao = new ByteArrayOutputStream();
-							
-							//File outputfile = new File(dest + fileName + "_" + ".jpg");
-							
+
 							ImageIO.write(image, "jpg", bao);
-							
+
 							array = bao.toByteArray();
-							
+
 							bao.close();
-							
+
 							document.close();
 						} else {
 							System.err.println(sourceFile.getName() + "--> File does not exist");
@@ -127,19 +89,19 @@ public class BookStoreServiceImpl implements BookStoreService {
 
 						BookDTO dto = bookTransformer.convertToDTO(book);
 						dto.setImage(array);
-						
+
 						listBookDTO.add(dto);
 					}
 				}
 
+				LOGGER.info("End getAllBooks with result: " + listBookDTO);
+				
 				return listBookDTO;
 			}
-		} catch (
-
-		Exception e) {
-
-		}
-
+		} catch (Exception e) {
+			LOGGER.error("BookStoreServiceImpl error: " + e.getMessage());
+		}		
+		
 		return null;
 	}
 

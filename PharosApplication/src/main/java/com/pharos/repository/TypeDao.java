@@ -11,4 +11,11 @@ import com.pharos.entity.Type;
 public interface TypeDao extends GenericDao<Type, Integer>{
 	
 	List<Type> loadType();
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	String getNameById(int id);
 }

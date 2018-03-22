@@ -13,8 +13,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.pharos.entity.Book;
-import com.pharos.entity.Member;
-import com.pharos.entity.Status;
 import com.pharos.entity.Store;
 import com.pharos.repository.BookDao;
 
@@ -34,7 +32,7 @@ public class BookDaoImpl extends GenericDaoImpl<Book, Integer> implements BookDa
 	@Override
 	public List<Book> getAllBooks(int memberId) {
 		
-		LOGGER.info("Begin getAllBooks:");
+		LOGGER.info("Begin getAllBooks with memberId: " + memberId);
 		
 		List<Book> listBooks = new ArrayList<Book>();
 		

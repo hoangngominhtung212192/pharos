@@ -2,6 +2,7 @@ package com.pharos.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -18,6 +19,10 @@ public class Type implements Serializable {
 	private int id;
 
 	private String name;
+
+	//bi-directional many-to-one association to Booktype
+	@OneToMany(mappedBy="type")
+	private List<Booktype> booktypes;
 
 	public Type() {
 	}
@@ -36,6 +41,28 @@ public class Type implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Booktype> getBooktypes() {
+		return this.booktypes;
+	}
+
+	public void setBooktypes(List<Booktype> booktypes) {
+		this.booktypes = booktypes;
+	}
+
+	public Booktype addBooktype(Booktype booktype) {
+		getBooktypes().add(booktype);
+		booktype.setType(this);
+
+		return booktype;
+	}
+
+	public Booktype removeBooktype(Booktype booktype) {
+		getBooktypes().remove(booktype);
+		booktype.setType(null);
+
+		return booktype;
 	}
 
 }
