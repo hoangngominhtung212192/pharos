@@ -17,7 +17,6 @@ public class AccountDaoImpl extends GenericDaoImpl<Account, Integer> implements 
 
 	private static final Logger LOGGER = LogManager.getLogger(AccountDaoImpl.class);
 
-
 	@Override
 	public Account registration(Account account) {
 		LOGGER.info("Begin registration in Account DAO with Account: {}", account.getUsername());
@@ -45,6 +44,25 @@ public class AccountDaoImpl extends GenericDaoImpl<Account, Integer> implements 
 			}
 		}
 		LOGGER.info("End findAccountByUsername in Account DAO with result: {}", account);
+		return account;
+	}
+
+	@Override
+	public Account findAccountById(int id) {
+		LOGGER.info("Begin findAccountById in Account DAO with id : ", id);
+		Account account = null;
+
+		List<Account> listAccount = new ArrayList<Account>();
+		String sql = "Select b from " + Account.class.getName() + " As b where b.id =:sId";
+
+		Query query = this.entitymanager.createQuery(sql);
+		query.setParameter("sId", id);
+		listAccount = query.getResultList();
+		if (listAccount.size() > 0) {
+			account = listAccount.get(0);
+
+		}
+		LOGGER.info("End findAccountById in Account DAO with id : ", id);
 		return account;
 	}
 

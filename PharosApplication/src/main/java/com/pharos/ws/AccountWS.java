@@ -1,10 +1,11 @@
 package com.pharos.ws;
 
+import java.util.HashMap;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +16,7 @@ public interface AccountWS {
 	
 	@GET
 	@RequestMapping(value = "/account/login")
-	ResponseEntity<String> checkLogin(@RequestBody AccountDTO dto);
+	HashMap<String, Integer> checkLogin(String username , String password);
 	
 	@POST
 	@RequestMapping(value = "/account/registration")

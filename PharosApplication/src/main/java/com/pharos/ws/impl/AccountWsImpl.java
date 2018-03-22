@@ -1,5 +1,9 @@
 package com.pharos.ws.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pharos.dto.AccountDTO;
+import com.pharos.dto.MemberDTO;
+import com.pharos.dto.RoleDTO;
 import com.pharos.service.AccountService;
+import com.pharos.service.MemberService;
+import com.pharos.service.RoleService;
 import com.pharos.ws.AccountWS;
 
 @RestController
@@ -16,56 +24,77 @@ public class AccountWsImpl implements AccountWS {
 
 	@Autowired
 	AccountService accountService;
-	
-	 private static final Logger LOGGER = LogManager.getLogger(AccountWsImpl.class);
-	
+	@Autowired
+	MemberService memberService;
+	@Autowired
+	RoleService roleService;
+
+	private static final Logger LOGGER = LogManager.getLogger(AccountWsImpl.class);
+
 	@Override
-	public ResponseEntity<String> checkLogin(AccountDTO dto) {
-		String username = "tamndse62381";
-        String password = "ac";
-        String message = "";
-        LOGGER.info("Begin login with username + password: {}", username + " -  " + password);
-        try {
-        	dto = accountService.login(username, password);
-        	if(dto != null) {
-        		message = "login successful";
-        	}else {
-        		message = "login FAIL";
-        	}
-        	
-        }catch(Exception e) {
-        	e.printStackTrace();
-        	message="login fail SML";
-        }
-		
-        
-        LOGGER.info("End login with username + password: {}", username + " -  " + password);
-        ResponseEntity<String> reEn = new ResponseEntity<String>(message , HttpStatus.OK);
-        return reEn;
+	public HashMap<String, Integer> checkLogin(String username, String password) {
+		LOGGER.info("Begin login in Account WS with username - password: {}", username + " - " + password);
+		AccountDTO accountDTO = null;
+		HashMap<String, Integer> hm = new HashMap<String,Integer>();
+		try {
+			accountDTO = new AccountDTO();
+			accountDTO = accountService.login(username, password);
+			LOGGER.info("End login in Account WS with username - password : {}", username + " - " + password);
+			if (accountDTO != null) {
+				hm.put("roleID", accountDTO.getRoleId());
+				if(accountDTO.getRoleId() == 1) {
+					int memberId = memberService.findMemberIdByAccountId(accountDTO);
+					hm.put("ID",memberId);
+				}else if (accountDTO.getRoleId() == 2) {
+					
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return hm;
 	}
 
 	@Override
 	public ResponseEntity<String> registratrion() {
 		String status = "";
-		AccountDTO dto = new AccountDTO();
-		dto.setId(0);
-		dto.setUsername("tamndse62381");
-		dto.setPassword("bibo1997");
-		dto.setRoleId(1);
-		dto.setEnable(true);
-        LOGGER.info("Begin registration with AccountDTO Id : " + dto.getId());
-        if(dto != null) {
-        	try {
-        		accountService.registration(dto);
-        		status = "Create Successfull";
-        	}catch(Exception e) {
-        		System.out.println(e);
-        		status = "Fail SML";
-        	}
-        }
-        LOGGER.info("End registration with AccountDTO Id : " + dto.getId());
-        ResponseEntity<String> response = new ResponseEntity<String>(status, HttpStatus.OK);
-        return response;
+		AccountDTO accountDTO = new AccountDTO();
+		accountDTO.setId(0);
+		accountDTO.setUsername("tamndse62381");
+		accountDTO.setPassword("bibo1997");
+		accountDTO.setRoleId(1);
+		accountDTO.setEnable(true);
+		LOGGER.info("Begin registration with AccountDTO Id : " + accountDTO.getId());
+		if (accountDTO != null) {
+			try {
+				int accountId = accountService.registration(accountDTO);
+				LOGGER.info("End registration with AccountDTO Id : " + accountDTO.getId());
+				if (accountId != 0) {
+					MemberDTO memberDTO = new MemberDTO();
+					memberDTO.setAccountId(accountId);
+					Date dob = new SimpleDateFormat("dd/MM/yyyy").parse("17/02/1997");
+					memberDTO.setBirthdate(dob);
+					memberDTO.setEmail("tamndse62381@gmail.com");
+					memberDTO.setFullname("Nguyen Duc Tam");
+					memberDTO.setMoney(300);
+					memberDTO.setTel("01227614243");
+					memberDTO.setAddress("65/58 Nguyen Dinh Chieu");
+					LOGGER.info("Begin registration with MemberDTO Id : " + memberDTO.getAccountId());
+					memberService.registration(memberDTO);
+					LOGGER.info("End registration with MemberDTO Id : " + memberDTO.getAccountId());
+					status = "Create Successfull";
+				} else if (accountId == -1) {
+					status = "Account Already Existed";
+				}
+
+			} catch (Exception e) {
+				System.out.println(e);
+				status = "Fail SML";
+			}
+		}
+
+		ResponseEntity<String> response = new ResponseEntity<String>(status, HttpStatus.OK);
+		return response;
 	}
 
 }
