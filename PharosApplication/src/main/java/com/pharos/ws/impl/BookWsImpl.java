@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pharos.dto.BookDTO;
@@ -19,8 +20,7 @@ import com.pharos.service.BookTypeService;
 import com.pharos.service.UploadBookService;
 import com.pharos.ws.BookWS;
 
-@Service
-@Transactional
+@RestController
 public class BookWsImpl implements BookWS {
 	private static final Logger LOGGER = LogManager.getLogger(BookWsImpl.class);
 	

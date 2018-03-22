@@ -25,30 +25,54 @@ import com.pharos.repository.BookDao;
 public class BookDaoImpl extends GenericDaoImpl<Book, Integer> implements BookDao {
 
 	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);
-	
-	/* (non-Javadoc)
+
+	public BookDaoImpl() {
+		super(Book.class);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pharos.repository.BookDao#getAllBooks()
 	 */
 	@Override
 	public List<Book> getAllBooks(int memberId) {
-		
-		LOGGER.info("Begin getAllBooks with memberId: " + memberId);
-		
-		List<Book> listBooks = new ArrayList<Book>();
-		
-		String sql = "SELECT b FROM " + Book.class.getName() + " AS b WHERE b.status.id = 1"
-				+ " AND b.id NOT IN (SELECT s.book.id FROM " + Store.class.getName() + " AS s WHERE s.member.id =:memberId)";
 
-		Query query = this.entitymanager.createQuery(sql);			
+		LOGGER.info("Begin getAllBooks with memberId: " + memberId);
+
+		List<Book> listBooks = new ArrayList<Book>();
+
+		String sql = "SELECT b FROM " + Book.class.getName() + " AS b WHERE b.status.id = 1"
+				+ " AND b.id NOT IN (SELECT s.book.id FROM " + Store.class.getName()
+				+ " AS s WHERE s.member.id =:memberId)";
+
+		Query query = this.entitymanager.createQuery(sql);
 		query.setParameter("memberId", memberId);
-		
+
 		listBooks = query.getResultList();
-		
+
 		LOGGER.info("End getAllBooks with result: " + listBooks);
-		
+
 		return listBooks;
 	}
 
-	
-	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pharos.repository.BookDao#getBookById(int)
+	 */
+	@Override
+	public Book getBookById(int bookId) {
+
+		LOGGER.info("Begin getBookById with bookId: " + bookId);
+
+		Book book = null;
+
+		book = this.read(bookId);
+
+		LOGGER.info("End getBookById with result: " + book);
+
+		return book;
+	}
+
 }
