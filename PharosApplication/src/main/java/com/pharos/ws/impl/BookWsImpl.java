@@ -22,8 +22,6 @@ import com.pharos.service.UploadBookService;
 import com.pharos.transformer.BookTransformer;
 import com.pharos.ws.BookWS;
 
-import springfox.documentation.spring.web.json.Json;
-
 @RestController
 public class BookWsImpl implements BookWS {
 	private static final Logger LOGGER = LogManager.getLogger(BookWsImpl.class);
