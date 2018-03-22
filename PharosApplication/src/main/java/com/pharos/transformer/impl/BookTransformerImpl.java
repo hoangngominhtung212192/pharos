@@ -3,6 +3,10 @@
  */
 package com.pharos.transformer.impl;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.stereotype.Service;
@@ -85,6 +89,33 @@ public class BookTransformerImpl implements BookTransformer {
 		}
 		
 		return book;
+	}
+
+	@Override
+	public BookDTO convertDataToDto(String data, String pdfLocate) {
+		BookDTO dto=new BookDTO();
+		
+		String[] info=data.split("\\|");
+		
+		String title=info[0];
+		int typeId=Integer.parseInt(info[1]);
+		float price=Float.parseFloat(info[2]);
+		String description=info[3];
+//		int authorId=Integer.parseInt(info[4]);
+		int authorId=1;
+		int languageId=Integer.parseInt(info[5]);
+		int statusId=Integer.parseInt(info[6]);
+		Date publishDate=new Date();
+		
+		dto.setTitle(title);
+		dto.setPrice(price);
+		dto.setDescription(description);
+		dto.setPrice(price);
+		dto.setAuthorId(authorId);
+		dto.setPublishDate(publishDate);
+		dto.setLanguageId(languageId);
+		dto.setStatusId(statusId);
+		return dto;
 	}
 
 }

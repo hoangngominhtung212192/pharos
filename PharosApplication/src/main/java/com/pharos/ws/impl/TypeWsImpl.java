@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pharos.dto.TypeDTO;
-import com.pharos.service.TypeService;
+import com.pharos.service.BookTypeService;
 import com.pharos.ws.TypeWS;
 
 /**
@@ -27,7 +27,7 @@ public class TypeWsImpl implements TypeWS {
 	private static final Logger LOGGER = LogManager.getLogger(TypeWsImpl.class);
 
 	@Autowired
-	TypeService typeService;
+	BookTypeService typeService;
 
 	/*
 	 * (non-Javadoc)

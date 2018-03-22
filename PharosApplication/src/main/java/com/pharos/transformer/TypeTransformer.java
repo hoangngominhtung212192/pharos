@@ -7,6 +7,11 @@ import com.pharos.entity.Type;
 
 @Service
 public interface TypeTransformer {
-	TypeDTO convertToDto(Type type);
 	
+	/**
+	 * 
+	 * @param type
+	 * @return
+	 */
+	TypeDTO convertToDto(Type type);
 }

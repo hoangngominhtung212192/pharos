@@ -49,6 +49,10 @@ public class Book implements Serializable {
 	@JoinColumn(name="statusID")
 	private Status status;
 
+	//bi-directional many-to-one association to Booktype
+	@OneToMany(mappedBy="book")
+	private List<Booktype> booktypes;
+
 	//bi-directional many-to-one association to Favorite
 	@OneToMany(mappedBy="book")
 	private List<Favorite> favorites;
@@ -150,6 +154,28 @@ public class Book implements Serializable {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public List<Booktype> getBooktypes() {
+		return this.booktypes;
+	}
+
+	public void setBooktypes(List<Booktype> booktypes) {
+		this.booktypes = booktypes;
+	}
+
+	public Booktype addBooktype(Booktype booktype) {
+		getBooktypes().add(booktype);
+		booktype.setBook(this);
+
+		return booktype;
+	}
+
+	public Booktype removeBooktype(Booktype booktype) {
+		getBooktypes().remove(booktype);
+		booktype.setBook(null);
+
+		return booktype;
 	}
 
 	public List<Favorite> getFavorites() {
