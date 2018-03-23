@@ -63,16 +63,16 @@ public class StoreWsImpl implements StoreWS {
 	 * @see com.pharos.ws.StoreWS#shoppingBook(int, int)
 	 */
 	@Override
-	public CartDTO shoppingBook(int memberId, int bookId) {
+	public Map<String, Boolean> shoppingBook(int memberId, int bookId) {
 
 		LOGGER.info("Begin shoppingBook with memberId:" + memberId + " and bookId:" + bookId);
 
 		try {
-			CartDTO dto = shoppingBookService.purchaseBook(memberId, bookId);
+			boolean shopping = shoppingBookService.purchaseBook(memberId, bookId);
 
-			LOGGER.info("End shoppingBook with result:" + dto);
+			LOGGER.info("End shoppingBook with result:" + shopping);
 
-			return dto;
+			return Collections.singletonMap("shopping", shopping);
 		} catch (Exception e) {
 			LOGGER.error("StoreWsImpl error: " + e.getMessage());
 		}

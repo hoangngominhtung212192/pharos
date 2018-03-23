@@ -1,7 +1,9 @@
 package com.pharos.ws.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -119,15 +121,15 @@ public class BookWsImpl implements BookWS {
 	 * @see com.pharos.ws.BookWS#redownloadBook(int)
 	 */
 	@Override
-	public CartDTO redownloadBook(int bookId) {
-		LOGGER.info("Begin redownloadBook with bookId: " + bookId);
+	public Map<String, byte[]> readBook(int bookId) {
+		LOGGER.info("Begin readBook with bookId: " + bookId);
 		
 		try {
-			CartDTO dto = bookStoreService.redownloadPurchasedBook_UninstalledApp(bookId);
+			byte[] array = bookStoreService.readBook(bookId);
 			
-			LOGGER.info("End redownloadBook with result: " + dto);
+			LOGGER.info("End readBook with result: " + array);
 			
-			return dto;
+			return Collections.singletonMap("pdfByteArray", array);
 		} catch (Exception e) {
 			LOGGER.error("BookWsImpl error: " + e.getMessage());
 		}

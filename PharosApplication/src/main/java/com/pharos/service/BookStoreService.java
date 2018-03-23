@@ -50,6 +50,6 @@ public interface BookStoreService {
 	 * @return
 	 * @throws BusinessException
 	 */
-	CartDTO redownloadPurchasedBook_UninstalledApp(int bookId) throws BusinessException;
+	byte[] readBook(int bookId) throws BusinessException;
 }
 

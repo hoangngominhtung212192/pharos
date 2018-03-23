@@ -30,7 +30,7 @@ public interface StoreWS {
 	
 	@POST
 	@RequestMapping(value="/store/shoppingBook")
-	CartDTO shoppingBook(@RequestParam("memberId") int memberId, @RequestParam("bookId") int bookId);
+	Map<String, Boolean> shoppingBook(@RequestParam("memberId") int memberId, @RequestParam("bookId") int bookId);
 	
 	@GET
 	@RequestMapping(value="/store/getPurchasedBooks")
