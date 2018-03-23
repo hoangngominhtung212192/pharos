@@ -20,6 +20,12 @@ public class MemberDTO {
 	float money;
 	String tel;
 	
+	
+	
+	public MemberDTO() {
+		super();
+	}
+
 	public MemberDTO(int id, int accountId, String fullname, Date birthdate, String email, String avatar,
 			String address, float money, String tel) {
 		super();
