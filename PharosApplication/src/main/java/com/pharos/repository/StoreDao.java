@@ -3,6 +3,8 @@
  */
 package com.pharos.repository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.pharos.entity.Store;
@@ -28,4 +30,11 @@ public interface StoreDao extends GenericDao<Store, Integer> {
 	 * @param store
 	 */
 	Store buyNewBook(Store store);
+	
+	/**
+	 * 
+	 * @param memberId
+	 * @return
+	 */
+	List<Store> getListBookByMemberId(int memberId);
 }
