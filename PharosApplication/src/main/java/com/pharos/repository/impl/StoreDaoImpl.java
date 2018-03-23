@@ -3,6 +3,8 @@
  */
 package com.pharos.repository.impl;
 
+import java.util.List;
+
 import javax.persistence.Query;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +23,13 @@ import com.pharos.repository.StoreDao;
 public class StoreDaoImpl extends GenericDaoImpl<Store, Integer> implements StoreDao {
 
 	private static final Logger LOGGER = LogManager.getLogger(StoreDaoImpl.class);
+	
+	/**
+	 * 
+	 */
+	public StoreDaoImpl() {
+		super(Store.class);
+	}
 	
 	/* (non-Javadoc)
 	 * @see com.pharos.repository.StoreDao#didBuyBook(int, int)
@@ -62,6 +71,26 @@ public class StoreDaoImpl extends GenericDaoImpl<Store, Integer> implements Stor
 		}
 		
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.pharos.repository.StoreDao#getListBookByMemberId(int)
+	 */
+	@Override
+	public List<Store> getListBookByMemberId(int memberId) {
+		
+		LOGGER.info("Begin getListBookByMemberId with memberId:" + memberId);
+		
+		String sql = "SELECT s FROM " + Store.class.getName() + " AS s WHERE s.member.id =:memberId";
+		
+		Query query = this.entitymanager.createQuery(sql);
+		query.setParameter("memberId", memberId);
+		
+		List<Store> listStores = query.getResultList();
+		
+		LOGGER.info("End getListBookByMemberId with result:" + listStores);
+		
+		return listStores;
 	}
 
 	

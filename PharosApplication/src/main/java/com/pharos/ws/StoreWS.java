@@ -3,6 +3,7 @@
  */
 package com.pharos.ws;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.GET;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pharos.dto.BookDTO;
 import com.pharos.dto.CartDTO;
 
 /**
@@ -29,4 +31,8 @@ public interface StoreWS {
 	@POST
 	@RequestMapping(value="/store/shoppingBook")
 	CartDTO shoppingBook(@RequestParam("memberId") int memberId, @RequestParam("bookId") int bookId);
+	
+	@GET
+	@RequestMapping(value="/store/getPurchasedBooks")
+	List<BookDTO> getAllPurchasedBooks(@RequestParam("memberId") int memberId);
 }

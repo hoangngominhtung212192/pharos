@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
 import com.pharos.dto.BookDTO;
+import com.pharos.dto.CartDTO;
 
 import springfox.documentation.spring.web.json.Json;
 
@@ -30,4 +31,8 @@ public interface BookWS {
 	@GET
 	@RequestMapping(value="/book/getAllBookTypes")
 	List<String> getAllTypes(@RequestParam("bookId") int bookId);
+	
+	@POST
+	@RequestMapping(value="/book/downloadBook")
+	CartDTO redownloadBook(@RequestParam("bookId") int bookId);
 }
