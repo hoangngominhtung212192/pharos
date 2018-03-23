@@ -35,23 +35,29 @@ public class AccountWsImpl implements AccountWS {
 	public HashMap<String, Integer> checkLogin(String username, String password) {
 		LOGGER.info("Begin login in Account WS with username - password: {}", username + " - " + password);
 		AccountDTO accountDTO = null;
-		HashMap<String, Integer> hm = new HashMap<String,Integer>();
+		HashMap<String, Integer> hm = new HashMap<String, Integer>();
 		try {
 			accountDTO = new AccountDTO();
 			accountDTO = accountService.login(username, password);
 			LOGGER.info("End login in Account WS with username - password : {}", username + " - " + password);
 			if (accountDTO != null) {
 				hm.put("roleID", accountDTO.getRoleId());
-				if(accountDTO.getRoleId() == 1) {
+				if (accountDTO.getRoleId() == 1) {
 					int memberId = memberService.findMemberIdByAccountId(accountDTO);
-					hm.put("ID",memberId);
-				}else if (accountDTO.getRoleId() == 2) {
-					
+					hm.put("ID", memberId);
+					return hm;
+				} else if (accountDTO.getRoleId() == 2) {
+
 				}
+
+			} else {
+				hm.put("roleID", -1);
+				hm.put("ID", -1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return hm;
 	}
 
