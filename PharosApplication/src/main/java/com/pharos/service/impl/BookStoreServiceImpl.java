@@ -106,17 +106,17 @@ public class BookStoreServiceImpl implements BookStoreService {
 	}
 
 	@Override
-	public boolean saveBookInfo(BookDTO bookDTO) {
-		boolean valid = true;
+	public int saveBookInfo(BookDTO bookDTO) {
+		int id=0;
 
 		Book book = bookTransformer.convertToEntity(bookDTO);
 
 		try {
-			bookDao.create(book);
+		id=	bookDao.create(book).getId();
 		} catch (Exception e) {
-			valid = false;
+			e.printStackTrace();
 		}
-		return valid;
+		return id;
 	}
 
 }

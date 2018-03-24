@@ -12,5 +12,7 @@ public interface AccountService {
 	
 	void registration(AccountDTO dto);
 	
+	boolean checkAccountValidation(String username);
+	
 	public AccountDTO findAccountByUsername(String username);
 }

@@ -94,4 +94,17 @@ public class AccountServiceImpl implements AccountService {
 		return accountDTO;
 	}
 
+	@Override
+	public boolean checkAccountValidation(String username) {
+		boolean valid=true;
+		
+		if (accountDao.findAccountByUsername(username)!=null) {
+			valid=false;
+		}
+		
+		
+		
+		return valid;
+	}
+
 }

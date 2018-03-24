@@ -15,6 +15,7 @@ public class BookDTO {
 	int authorId;
 	String pdfLocate;
 	Date publishDate;
+	int typeId;
 	byte[] image;
 
 	public BookDTO(String title, String description, int viewCount, float price, int voteCount, int statusId,
@@ -186,6 +187,14 @@ public class BookDTO {
 	 */
 	public void setAuthorId(int authorId) {
 		this.authorId = authorId;
+	}
+
+	public int getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(int typeId) {
+		this.typeId = typeId;
 	}
 	
 	

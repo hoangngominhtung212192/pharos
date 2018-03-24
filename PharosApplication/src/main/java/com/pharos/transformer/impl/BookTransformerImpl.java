@@ -108,6 +108,7 @@ public class BookTransformerImpl implements BookTransformer {
 		Date publishDate=new Date();
 		
 		dto.setTitle(title);
+		dto.setTypeId(typeId);
 		dto.setPrice(price);
 		dto.setDescription(description);
 		dto.setPrice(price);

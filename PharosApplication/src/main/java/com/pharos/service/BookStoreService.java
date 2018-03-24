@@ -28,6 +28,6 @@ public interface BookStoreService {
 	 */
 	List<BookDTO> getAllBooks(int memberId) throws BusinessException;
 	
-	boolean saveBookInfo(BookDTO bookDTO);
+	int saveBookInfo(BookDTO bookDTO);
 }
 
