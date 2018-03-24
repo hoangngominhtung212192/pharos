@@ -76,7 +76,7 @@ public class ShoppingBookServiceImpl implements ShoppingBookService {
 	 * @see com.pharos.service.ShoppingBookService#purchaseBook(int, int)
 	 */
 	@Override
-	public CartDTO purchaseBook(int memberId, int bookId) throws BusinessException {
+	public boolean purchaseBook(int memberId, int bookId) throws BusinessException {
 
 		LOGGER.info("Begin purchaseBook with memberId: " + memberId + " and bookId: " + bookId);
 
@@ -99,50 +99,17 @@ public class ShoppingBookServiceImpl implements ShoppingBookService {
 		try {
 			Store newStore = storeDao.buyNewBook(store);
 
+			LOGGER.info("End purchaseBook with result: " + newStore);
+			
 			if (newStore != null) {
-				boolean success = true;
-
-				Book currentBook = bookDao.getBookById(bookId);
-
-				if (currentBook != null) {
-
-					BookDTO currentBookDTO = bookTransformer.convertToDTO(currentBook);
-
-					String pdfUrl = currentBookDTO.getPdfLocate();
-
-					byte[] buffer = new byte[8192];
-
-					File pdfFile = new File(pdfUrl);
-
-					if (pdfFile.exists()) {
-
-						FileInputStream fis = new FileInputStream(pdfFile);
-
-						ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-						for (int readNum; (readNum = fis.read(buffer)) != -1;) {
-							baos.write(buffer, 0, readNum);
-						}
-
-						byte[] bytes = baos.toByteArray();
-
-						CartDTO cartDTO = new CartDTO(bytes, success, bookId);
-
-						return cartDTO;
-
-					} else {
-						LOGGER.error(pdfFile.getName() + " does not exist !");
-					}
-				}
+				return true;
 			}
-
-		} catch (IOException e) {
-			LOGGER.error("PurchaseBookServiceImpl error: " + e.getMessage());
+			
 		} catch (Exception e) {
 			LOGGER.error("PurchaseBookServiceImpl error: " + e.getMessage());
 		}
 
-		return null;
+		return false;
 	}
 
 }

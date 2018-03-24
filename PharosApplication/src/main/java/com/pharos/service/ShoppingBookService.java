@@ -34,5 +34,5 @@ public interface ShoppingBookService {
 	 * @return
 	 * @throws BusinessException
 	 */
-	CartDTO purchaseBook(int memberId, int bookId) throws BusinessException;
+	boolean purchaseBook(int memberId, int bookId) throws BusinessException;
 }

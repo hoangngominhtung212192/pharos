@@ -208,9 +208,9 @@ public class BookStoreServiceImpl implements BookStoreService {
 	 * @see com.pharos.service.BookStoreService#redownloadPurchasedBook_UninstalledApp(int)
 	 */
 	@Override
-	public CartDTO redownloadPurchasedBook_UninstalledApp(int bookId) throws BusinessException {
+	public byte[] readBook(int bookId) throws BusinessException {
 		
-		LOGGER.info("Begin redownloadPurchasedBook_UninstalledApp with bookId: " + bookId);
+		LOGGER.info("Begin readBook_Service with bookId: " + bookId);
 		
 		try {
 			Book book = bookDao.getBookById(bookId);
@@ -237,10 +237,10 @@ public class BookStoreServiceImpl implements BookStoreService {
 					}
 
 					byte[] bytes = baos.toByteArray();
-
-					CartDTO cartDTO = new CartDTO(bytes, success, bookId);
-
-					return cartDTO;
+					
+					LOGGER.info("End readBook_Service with result: " + bytes);
+					
+					return bytes;
 				}	else {
 					LOGGER.error(pdfFile.getName() + " does not exist !");
 				}
