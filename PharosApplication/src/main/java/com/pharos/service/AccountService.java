@@ -10,9 +10,11 @@ public interface AccountService {
 	
 	public AccountDTO login(String username , String password);
 	
-	void registration(AccountDTO dto);
+	public int registration(AccountDTO dto);
 	
 	boolean checkAccountValidation(String username);
 	
 	public AccountDTO findAccountByUsername(String username);
+	
+	public AccountDTO findAccountById(int id);
 }

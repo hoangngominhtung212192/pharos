@@ -1,11 +1,12 @@
 package com.pharos.ws;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 
-import org.json.JSONObject;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pharos.dto.BookDTO;
 import com.pharos.dto.ResultResponseDTO;
+
+
 
 @RestController
 public interface BookWS {
@@ -29,4 +32,8 @@ public interface BookWS {
 	@GET
 	@RequestMapping(value="/book/getAllBookTypes")
 	List<String> getAllTypes(@RequestParam("bookId") int bookId);
+	
+	@POST
+	@RequestMapping(value="/book/readBook")
+	Map<String, byte[]> readBook(@RequestParam("bookId") int bookId);
 }

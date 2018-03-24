@@ -1,7 +1,9 @@
 package com.pharos.ws.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,6 +38,7 @@ public class BookWsImpl implements BookWS {
 	private BookTransformer bookTrans;
 
 	@Override
+
 	public ResponseEntity<ResultResponseDTO> createBook(MultipartFile file, String book_info) {
 		ResultResponseDTO resultResponse = new ResultResponseDTO();
 		ResponseEntity<ResultResponseDTO> response = null;
@@ -48,10 +51,12 @@ public class BookWsImpl implements BookWS {
 			dto.setVoteCount(0);
 			dto.setPdfLocate(pdfLocate);
 
+
 			int id = bookStoreService.saveBookInfo(dto);
 			int typeId = dto.getTypeId();
 
 			sucess = bookTypeService.addBookType(id, typeId);
+			bookStoreService.saveBookInfo(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			sucess = false;
@@ -68,7 +73,6 @@ public class BookWsImpl implements BookWS {
 			resultResponse.setStatus("FALSE");
 			resultResponse.setMessage("Save failed");
 			response = new ResponseEntity<ResultResponseDTO>(resultResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-
 		}
 
 		return response;
@@ -117,6 +121,28 @@ public class BookWsImpl implements BookWS {
 		LOGGER.info("End getAllTypes with result: " + listTypes);
 
 		return listTypes;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pharos.ws.BookWS#redownloadBook(int)
+	 */
+	@Override
+	public Map<String, byte[]> readBook(int bookId) {
+		LOGGER.info("Begin readBook with bookId: " + bookId);
+		
+		try {
+			byte[] array = bookStoreService.readBook(bookId);
+			
+			LOGGER.info("End readBook with result: " + array);
+			
+			return Collections.singletonMap("pdfByteArray", array);
+		} catch (Exception e) {
+			LOGGER.error("BookWsImpl error: " + e.getMessage());
+		}
+
+		return null;
 	}
 
 }

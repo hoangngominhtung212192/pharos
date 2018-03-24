@@ -31,8 +31,9 @@ public class AccountServiceImpl implements AccountService {
 	private EncrytedPasswordUtils passwordUtil;
 
 	@Override
-	public void registration(AccountDTO dto) {
+	public int registration(AccountDTO dto) {
 		LOGGER.info("Begin registration in Account Service with Account DTO ID : {}", dto.getId());
+		Account newAccount = null;
 		EncrytedPasswordUtils passwordUtil = new EncrytedPasswordUtils();
 
 		String newPassword = passwordUtil.encrytePassword(dto.getPassword());
@@ -49,16 +50,17 @@ public class AccountServiceImpl implements AccountService {
 
 			if (account != null && roleDTO != null) {
 				try {
-					Account newAccount = accountDao.registration(account);
-					LOGGER.info("End createUser in Account Service with result: {}", newAccount.toString());
+					newAccount = accountDao.registration(account);
+					LOGGER.info("End registration in Account Service with result: {}", newAccount.toString());
 
 				} catch (Exception e) {
 					System.out.println(e);
 				}
 			}
 		} else {
-			// already existed account
+			return -1;
 		}
+		return newAccount.getId();
 	}
 
 	@Override
@@ -72,7 +74,7 @@ public class AccountServiceImpl implements AccountService {
 				accountDTO = accountTransformer.convertToDTO(account);
 			}
 		}
-		LOGGER.info("End findUserByUserName in Account Service with result: {}", accountDTO);
+		LOGGER.info("End findAccountByUserName in Account Service with result: {}", accountDTO);
 		return accountDTO;
 	}
 
@@ -83,12 +85,13 @@ public class AccountServiceImpl implements AccountService {
 		passwordUtil = new EncrytedPasswordUtils();
 		if (username != null) {
 			accountDTO = findAccountByUsername(username);
-			if (passwordUtil.compare(password, accountDTO.getPassword())) {
-				return accountDTO;
-			} else {
-				return null;
+			if (accountDTO != null) {
+				if (passwordUtil.compare(password, accountDTO.getPassword())) {
+					return accountDTO;
+				} else {
+					return null;
+				}
 			}
-
 		}
 		LOGGER.info("End login in Account Service with result: {}", accountDTO);
 		return accountDTO;
@@ -96,15 +99,26 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public boolean checkAccountValidation(String username) {
-		boolean valid=true;
-		
-		if (accountDao.findAccountByUsername(username)!=null) {
-			valid=false;
+		boolean valid = true;
+
+		if (accountDao.findAccountByUsername(username) != null) {
+			valid = false;
 		}
-		
-		
-		
+
 		return valid;
 	}
 
+	public AccountDTO findAccountById(int id) {
+		LOGGER.info("Begin findAccountById in Account Service with id ", +id);
+		AccountDTO accountDTO = null;
+		Account account = null;
+
+		account = accountDao.findAccountById(id);
+		if (account != null) {
+			accountDTO = accountTransformer.convertToDTO(account);
+		}
+
+		LOGGER.info("Begin findAccountById in Account Service with id ", +id);
+		return accountDTO;
+	}
 }
