@@ -1,11 +1,14 @@
 package com.pharos.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.pharos.dto.AccountDTO;
 
 
 @Service
+@Transactional
 public interface AccountService {
 	
 	public AccountDTO login(String username , String password);
