@@ -123,13 +123,36 @@ public class BookWsImpl implements BookWS {
 	@Override
 	public Map<String, byte[]> readBook(int bookId) {
 		LOGGER.info("Begin readBook with bookId: " + bookId);
-		
+
 		try {
 			byte[] array = bookStoreService.readBook(bookId);
-			
+
 			LOGGER.info("End readBook with result: " + array);
-			
+
 			return Collections.singletonMap("pdfByteArray", array);
+		} catch (Exception e) {
+			LOGGER.error("BookWsImpl error: " + e.getMessage());
+		}
+
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pharos.ws.BookWS#searchByTitle(java.lang.String)
+	 */
+	@Override
+	public List<BookDTO> searchByTitle(String title) {
+
+		LOGGER.info("Begin searchByTitle with title: " + title);
+
+		try {
+			List<BookDTO> listBooks = bookStoreService.searchByTitle(title);
+
+			LOGGER.info("End searchByTitle with result: " + listBooks);
+
+			return listBooks;
 		} catch (Exception e) {
 			LOGGER.error("BookWsImpl error: " + e.getMessage());
 		}

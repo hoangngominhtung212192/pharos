@@ -29,4 +29,11 @@ public interface BookDao extends GenericDao<Book, Integer> {
 	 * @return
 	 */
 	Book getBookById(int bookId);
+	
+	/**
+	 * 
+	 * @param title
+	 * @return
+	 */
+	List<Book> searchByTitle(String title);
 }

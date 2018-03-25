@@ -36,4 +36,8 @@ public interface BookWS {
 	@POST
 	@RequestMapping(value="/book/readBook")
 	Map<String, byte[]> readBook(@RequestParam("bookId") int bookId);
+	
+	@GET
+	@RequestMapping(value="/book/searchByTitle")
+	List<BookDTO> searchByTitle(@RequestParam("title") String title);
 }
