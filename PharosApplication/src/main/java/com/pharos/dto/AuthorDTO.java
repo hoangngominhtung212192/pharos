@@ -20,6 +20,12 @@ public class AuthorDTO {
 	String avatar;
 	String motto;
 	
+	/**
+	 * 
+	 */
+	public AuthorDTO() {
+	}
+
 	public AuthorDTO(int id, int accountId, String name, String tel, int cardNo, String frontCardImg,
 			String backCardImg, String address, String email, String avatar, String motto) {
 		super();

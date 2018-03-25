@@ -4,11 +4,12 @@ import javax.persistence.Query;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import org.springframework.stereotype.Repository;
 
 import com.pharos.entity.Author;
 import com.pharos.repository.AuthorDao;
 
+@Repository
 public class AuthorDaoImpl extends GenericDaoImpl<Author, Integer> implements AuthorDao {
 
 	private static final Logger LOGGER = LogManager.getLogger(AuthorDao.class);
