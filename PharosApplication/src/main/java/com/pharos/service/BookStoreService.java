@@ -29,12 +29,13 @@ public interface BookStoreService {
 	 */
 	List<BookDTO> getAllBooks(int memberId) throws BusinessException;
 	
+	
 	/**
 	 * 
 	 * @param bookDTO
 	 * @return
 	 */
-	boolean saveBookInfo(BookDTO bookDTO);
+	int saveBookInfo(BookDTO bookDTO);
 	
 	/**
 	 * 
@@ -50,6 +51,7 @@ public interface BookStoreService {
 	 * @return
 	 * @throws BusinessException
 	 */
+
 	byte[] readBook(int bookId) throws BusinessException;
 	
 	/**

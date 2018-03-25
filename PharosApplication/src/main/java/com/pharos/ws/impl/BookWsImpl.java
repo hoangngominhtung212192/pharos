@@ -13,9 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.JsonObject;
 import com.pharos.dto.BookDTO;
-import com.pharos.dto.CartDTO;
+import com.pharos.dto.ResultResponseDTO;
 import com.pharos.service.BookStoreService;
 import com.pharos.service.BookTypeService;
 import com.pharos.service.UploadBookService;
@@ -39,9 +38,10 @@ public class BookWsImpl implements BookWS {
 	private BookTransformer bookTrans;
 
 	@Override
-	public ResponseEntity<JsonObject> createBook(MultipartFile file, String book_info) {
-		JsonObject jsonObject = new JsonObject();
-		ResponseEntity<JsonObject> response;
+
+	public ResponseEntity<ResultResponseDTO> createBook(MultipartFile file, String book_info) {
+		ResultResponseDTO resultResponse = new ResultResponseDTO();
+		ResponseEntity<ResultResponseDTO> response = null;
 
 		boolean sucess = true;
 		try {
@@ -51,6 +51,11 @@ public class BookWsImpl implements BookWS {
 			dto.setVoteCount(0);
 			dto.setPdfLocate(pdfLocate);
 
+
+			int id = bookStoreService.saveBookInfo(dto);
+			int typeId = dto.getTypeId();
+
+			sucess = bookTypeService.addBookType(id, typeId);
 			bookStoreService.saveBookInfo(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -58,13 +63,16 @@ public class BookWsImpl implements BookWS {
 		}
 
 		if (sucess) {
-			jsonObject.addProperty("status", "OK");
-			jsonObject.addProperty("Message", "Save success");
-			response = new ResponseEntity<JsonObject>(jsonObject, HttpStatus.OK);
+
+			resultResponse.setStatus("OK");
+			resultResponse.setMessage("Save sucess");
+			response = new ResponseEntity<ResultResponseDTO>(resultResponse, HttpStatus.OK);
+
 		} else {
-			jsonObject.addProperty("status", "False");
-			jsonObject.addProperty("Message", "Save false");
-			response = new ResponseEntity<JsonObject>(jsonObject, HttpStatus.INTERNAL_SERVER_ERROR);
+
+			resultResponse.setStatus("FALSE");
+			resultResponse.setMessage("Save failed");
+			response = new ResponseEntity<ResultResponseDTO>(resultResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		return response;

@@ -12,6 +12,8 @@ public interface AccountService {
 	
 	public int registration(AccountDTO dto);
 	
+	boolean checkAccountValidation(String username);
+	
 	public AccountDTO findAccountByUsername(String username);
 	
 	public AccountDTO findAccountById(int id);

@@ -15,4 +15,6 @@ public interface BookTypeService {
 	List<TypeDTO> loadTypes();
 
 	List<String> getListTypesByBookId(int id) throws BusinessException;
+	
+	boolean addBookType(int bookId,int typeId);
 }

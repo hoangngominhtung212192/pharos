@@ -20,5 +20,5 @@ public interface AccountWS {
 	
 	@POST
 	@RequestMapping(value = "/account/registration")
-	ResponseEntity<String> registratrion();
+	String registratrion(String username ,String password, String email, String tel);
 }
