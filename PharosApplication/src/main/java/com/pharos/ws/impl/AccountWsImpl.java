@@ -135,7 +135,7 @@ public class AccountWsImpl implements AccountWS {
 
 	@Override
 	public ResponseEntity<ResultResponseDTO> registAuthor(String accountInfo, String authorInfo,
-			MultipartFile fronImage, MultipartFile backImage) {
+			MultipartFile frontImage, MultipartFile backImage) {
 		ResponseEntity<ResultResponseDTO> response = null;
 		ResultResponseDTO responseDTO = new ResultResponseDTO();
 
@@ -175,7 +175,7 @@ public class AccountWsImpl implements AccountWS {
 
 				else {
 					LOGGER.info("Begin create author with data : " + authorInfo);
-					String fronImageLocate = upload.saveBook(fronImage);
+					String fronImageLocate = upload.saveBook(frontImage);
 					String backImageLocate = upload.saveBook(backImage);
 
 					authorDTO.setBackCardImg(backImageLocate);
