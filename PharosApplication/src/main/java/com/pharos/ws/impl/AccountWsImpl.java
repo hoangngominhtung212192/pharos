@@ -138,62 +138,74 @@ public class AccountWsImpl implements AccountWS {
 			MultipartFile fronImage, MultipartFile backImage) {
 		ResponseEntity<ResultResponseDTO> response = null;
 		ResultResponseDTO responseDTO = new ResultResponseDTO();
-		
-		
+
 		LOGGER.info("Begin registration author with data: " + accountInfo + " and " + authorInfo);
-		AuthorDTO authorDTO = authorTransformer.convertDataToAuthorDto(authorInfo);
+		if (authorInfo != null) {
+			AuthorDTO authorDTO = authorTransformer.convertDataToAuthorDto(authorInfo);
+			
+//		AuthorDTO authorDTO=new AuthorDTO();
+//		authorDTO.setEmail("hieptb@gmail.com");
+//		authorDTO.setName("hiep");
+//		authorDTO.setAddress("Address");
+//		authorDTO.setTel("1234567");
+		
 		String email = authorDTO.getEmail();
 
-		LOGGER.info("Begin check duplicate email: " +email);
-		if (!authorService.checkEmail(email)) {
-			responseDTO.setStatus("Failed");
-			responseDTO.setMessage("Email is duplicate");
-			LOGGER.error(email+" is duplicated");
-			
-			response = new ResponseEntity<ResultResponseDTO>(responseDTO, HttpStatus.CONFLICT);
-		} else {
-			LOGGER.info("Begin create account with data : " + accountInfo);
-			
-			AccountDTO accountDTO = accountTransformer.convertDataToAccountDto(accountInfo, 3);
-			accountDTO.setEnable(true);
-			int accId = accountService.registration(accountDTO);
-
-			if (accId == -1) {
+			LOGGER.info("Begin check duplicate email: " + email);
+			if (authorService.checkEmail(email)) {
 				responseDTO.setStatus("Failed");
-				responseDTO.setMessage("Can't create account");
-				LOGGER.error("Create account failed!");
-				response = new ResponseEntity<ResultResponseDTO>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
-				
-			}
+				responseDTO.setMessage("Email is duplicate");
+				LOGGER.error(email + " is duplicated");
 
-			else {
-				LOGGER.info("Begin create author with data : " + authorInfo);
-				String fronImageLocate = upload.saveBook(fronImage);
-				String backImageLocate = upload.saveBook(backImage);
+				response = new ResponseEntity<ResultResponseDTO>(responseDTO, HttpStatus.CONFLICT);
+			} else {
+				LOGGER.info("Begin create account with data : " + accountInfo);
 
-				authorDTO.setBackCardImg(backImageLocate);
-				authorDTO.setFrontCardImg(fronImageLocate);
-	
-				authorDTO.setAccountId(accId);
-				authorDTO.setAvatar("null");
-				authorDTO.setCardNo(0);
-				authorDTO.setMotto("null");
-				
-				
-				int authorId=authorService.createAuthor(authorDTO);
-				if (authorId<0) {
+				AccountDTO accountDTO = accountTransformer.convertDataToAccountDto(accountInfo, 3);
+				accountDTO.setEnable(true);
+				int accId = accountService.registration(accountDTO);
+
+				if (accId == -1) {
 					responseDTO.setStatus("Failed");
-					responseDTO.setMessage("Can't create author");
-					LOGGER.error("Create author failed!");
-					
+					responseDTO.setMessage("Can't create account");
+					LOGGER.error("Create account failed!");
 					response = new ResponseEntity<ResultResponseDTO>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
-				}else {
-					responseDTO.setStatus("Ok");
-					responseDTO.setMessage("Create account sucess!");
-					response = new ResponseEntity<ResultResponseDTO>(responseDTO, HttpStatus.OK);
-					LOGGER.info("create author sucess with id: " +accId);
+
+				}
+
+				else {
+					LOGGER.info("Begin create author with data : " + authorInfo);
+					String fronImageLocate = upload.saveBook(fronImage);
+					String backImageLocate = upload.saveBook(backImage);
+
+					authorDTO.setBackCardImg(backImageLocate);
+					authorDTO.setFrontCardImg(fronImageLocate);
+
+					authorDTO.setAccountId(accId);
+					authorDTO.setAvatar("null");
+					authorDTO.setCardNo(0);
+					authorDTO.setMotto("null");
+
+					int authorId = authorService.createAuthor(authorDTO);
+					if (authorId < 0) {
+						responseDTO.setStatus("Failed");
+						responseDTO.setMessage("Can't create author");
+						LOGGER.error("Create author failed!");
+
+						response = new ResponseEntity<ResultResponseDTO>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+					} else {
+						responseDTO.setStatus("Ok");
+						responseDTO.setMessage("Create account sucess!");
+						response = new ResponseEntity<ResultResponseDTO>(responseDTO, HttpStatus.OK);
+						LOGGER.info("create author sucess with id: " + accId);
+					}
 				}
 			}
+		}else {
+			responseDTO.setStatus("Failed");
+			responseDTO.setMessage("Author Info is null");
+			LOGGER.error("Create author failed!");
+			response = new ResponseEntity<ResultResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
 		}
 		LOGGER.info("End registration author");
 		return response;

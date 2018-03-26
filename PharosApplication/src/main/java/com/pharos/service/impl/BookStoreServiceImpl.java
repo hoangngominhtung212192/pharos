@@ -252,4 +252,36 @@ public class BookStoreServiceImpl implements BookStoreService {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pharos.service.BookStoreService#searchByTitle(java.lang.String)
+	 */
+	@Override
+	public List<BookDTO> searchByTitle(String title) throws BusinessException {
+		
+		LOGGER.info("Begin searchByTitle with title: " + title);
+		
+		try {
+			
+			List<BookDTO> listBookDTOs = new ArrayList<BookDTO>();
+			List<Book> listBooks = bookDao.searchByTitle(title);
+			
+			if (listBooks != null) {
+				for (Book book : listBooks) {
+					BookDTO dto = bookTransformer.convertToDTO(book);
+					
+					listBookDTOs.add(dto);
+				}
+				
+				LOGGER.info("End searchByTitle with result: " + listBookDTOs);
+				
+				return listBookDTOs;
+			}
+			
+		} catch (Exception e) {
+			LOGGER.error("BookStoreServiceImpl error: " + e.getMessage());
+		}
+		
+		return null;
+	}
+
 }

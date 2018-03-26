@@ -75,4 +75,23 @@ public class BookDaoImpl extends GenericDaoImpl<Book, Integer> implements BookDa
 		return book;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pharos.repository.BookDao#searchByTitle(java.lang.String)
+	 */
+	@Override
+	public List<Book> searchByTitle(String title) {
+		
+		LOGGER.info("Begin searchByTitle with title: " + title);
+		
+		List<Book> listBooks = new ArrayList<Book>();
+		
+		String sql = "SELECT b FROM " + Book.class.getName() + " AS b WHERE b.title LIKE '%" + title + "%'";
+		
+		Query query = this.entitymanager.createQuery(sql);
+		
+		listBooks = query.getResultList();
+		
+		return listBooks;
+	}
+
 }

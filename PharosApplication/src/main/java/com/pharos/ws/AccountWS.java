@@ -27,9 +27,9 @@ public interface AccountWS {
 
 	@POST
 	@RequestMapping(value = "/author/regist")
-	ResponseEntity<ResultResponseDTO> registAuthor(@RequestParam("accountInfo") String accountInfo,
-			@RequestParam("publisherInfo") String authorInfo, @RequestParam("frontImage") MultipartFile fronImage,
-			@RequestParam("backImage") MultipartFile backImage);
+	ResponseEntity<ResultResponseDTO> registAuthor(@RequestParam(value = "accountInfo") String accountInfo,
+			@RequestParam(value = "publisherInfo") String authorInfo, @RequestParam(value = "frontImage") MultipartFile fronImage,
+			@RequestParam(value = "backImage") MultipartFile backImage);
 
 	@GET
 	@RequestMapping(value = "/account/checkAccount")
