@@ -39,6 +39,8 @@ public class AccountServiceImpl implements AccountService {
 		String newPassword = passwordUtil.encrytePassword(dto.getPassword());
 		dto.setPassword(newPassword);
 
+		dto.setEnable(true);
+		
 		Account account = accountTransformer.convertToEntity(dto);
 
 		AccountDTO existedAccount = null;

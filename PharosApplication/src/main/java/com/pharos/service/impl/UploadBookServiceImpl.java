@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Transactional
 public class UploadBookServiceImpl implements UploadBookService {
 
-	private final static String UPLOADED_FOLDER = "C:/temp/";
+	private final static String UPLOADED_FOLDER = "C:/books/";
 
 	@Override
 	public void uploadBook(BookDTO newBook) {
@@ -33,16 +33,16 @@ public class UploadBookServiceImpl implements UploadBookService {
 		String filename=null;
 		if (file.isEmpty()) {
             
-        }else {
-        	try {
-                // Get the file and save it somewhere
-                byte[] bytes = file.getBytes();
-                filename=UPLOADED_FOLDER + file.getOriginalFilename();
-                Path path = Paths.get(filename);
-                Files.write(path, bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } else {
+			try {
+				// Get the file and save it somewhere
+				byte[] bytes = file.getBytes();
+				filename = UPLOADED_FOLDER + file.getOriginalFilename();
+				Path path = Paths.get(filename);
+				Files.write(path, bytes);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
         }
 		return filename;
 	}

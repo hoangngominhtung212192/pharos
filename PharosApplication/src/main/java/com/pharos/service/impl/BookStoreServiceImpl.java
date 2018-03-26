@@ -265,9 +265,36 @@ public class BookStoreServiceImpl implements BookStoreService {
 			List<BookDTO> listBookDTOs = new ArrayList<BookDTO>();
 			List<Book> listBooks = bookDao.searchByTitle(title);
 			
+			byte[] array = null;
+			
 			if (listBooks != null) {
 				for (Book book : listBooks) {
 					BookDTO dto = bookTransformer.convertToDTO(book);
+					
+					String sourceDir = book.getPdf();
+					File sourceFile = new File(sourceDir);
+
+					if (sourceFile.exists()) {
+						PDDocument document = PDDocument.load(sourceDir);
+
+						PDPage firstPage = (PDPage) document.getDocumentCatalog().getAllPages().get(0);
+
+						BufferedImage image = firstPage.convertToImage();
+
+						ByteArrayOutputStream bao = new ByteArrayOutputStream();
+
+						ImageIO.write(image, "jpg", bao);
+
+						array = bao.toByteArray();
+
+						bao.close();
+
+						document.close();
+						
+						dto.setImage(array);
+					} else {
+						System.err.println(sourceFile.getName() + "--> File does not exist");
+					}
 					
 					listBookDTOs.add(dto);
 				}
