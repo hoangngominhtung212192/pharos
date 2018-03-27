@@ -62,7 +62,9 @@ public class AccountWsImpl implements AccountWS {
 					hm.put("ID", memberId);
 					return hm;
 				} else if (accountDTO.getRoleId() == 3) {
-
+					int authorId = authorService.findAuthorByAccountId(accountDTO.getId());
+					hm.put("ID", authorId);
+					return hm;
 				}
 
 			} else {

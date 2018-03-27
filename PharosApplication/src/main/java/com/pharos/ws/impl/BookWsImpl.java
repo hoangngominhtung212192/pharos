@@ -168,4 +168,22 @@ public class BookWsImpl implements BookWS {
 		return null;
 	}
 
+	@Override
+	public List<BookDTO> getAllBooksByAuthorId(int authorId) {
+		
+		LOGGER.info("Begin getAllBooksByAuthorId with authorId: " + authorId);
+
+		try {
+			List<BookDTO> listBooks = bookStoreService.getAllBookByAuthorId(authorId);
+
+			LOGGER.info("End getAllBooksByAuthorId with result: " + listBooks);
+
+			return listBooks;
+		} catch (Exception e) {
+			LOGGER.error("BookWsImpl error: " + e.getMessage());
+		}
+
+		return null;
+	}
+
 }

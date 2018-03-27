@@ -61,5 +61,13 @@ public interface BookStoreService {
 	 * @throws BusinessException
 	 */
 	List<BookDTO> searchByTitle(String title) throws BusinessException;
+	
+	/**
+	 * 
+	 * @param authorId
+	 * @return
+	 * @throws BusinessException
+	 */
+	List<BookDTO> getAllBookByAuthorId(int authorId) throws BusinessException;
 }
 

@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.pharos.dto.AccountDTO;
+import com.pharos.dto.MemberDTO;
 
 
 @Service
@@ -20,4 +21,11 @@ public interface AccountService {
 	public AccountDTO findAccountByUsername(String username);
 	
 	public AccountDTO findAccountById(int id);
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public MemberDTO findMemberById(int id);
 }

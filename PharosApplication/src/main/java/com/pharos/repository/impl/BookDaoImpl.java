@@ -75,22 +75,47 @@ public class BookDaoImpl extends GenericDaoImpl<Book, Integer> implements BookDa
 		return book;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pharos.repository.BookDao#searchByTitle(java.lang.String)
 	 */
 	@Override
 	public List<Book> searchByTitle(String title) {
-		
+
 		LOGGER.info("Begin searchByTitle with title: " + title);
-		
+
 		List<Book> listBooks = new ArrayList<Book>();
-		
-		String sql = "SELECT b FROM " + Book.class.getName() + " AS b WHERE b.title LIKE '%" + title + "%'";
-		
+
+		String sql = "SELECT b FROM " + Book.class.getName() + " AS b WHERE b.title LIKE '%" + title + "%' AND "
+				+ "b.status.id=1";
+
 		Query query = this.entitymanager.createQuery(sql);
+
+		listBooks = query.getResultList();
+
+		LOGGER.info("End searchByTitle with result: " + listBooks);
+
+		return listBooks;
+	}
+
+	@Override
+	public List<Book> getAllBooksByAuthorId(int authorId) {
+
+		LOGGER.info("Begin getAllBooksByAuthorId with authorId: " + authorId);
+
+		List<Book> listBooks = new ArrayList<Book>();
+
+		String sql = "SELECT b FROM " + Book.class.getName() + " AS b WHERE b.author.id =:authorId AND "
+				+ "b.status.id=1";
+
+		Query query = this.entitymanager.createQuery(sql);
+		query.setParameter("authorId", authorId);
 		
 		listBooks = query.getResultList();
-		
+
+		LOGGER.info("End searchByTitle with result: " + listBooks);
+
 		return listBooks;
 	}
 

@@ -69,4 +69,27 @@ public class AuthorTransformerImpl implements AuthorTransformer {
 		return author;
 	}
 
+	@Override
+	public AuthorDTO convertToDto(Author author) {
+		LOGGER.info("Begin convertToDto with Author Entity ID: {}", author.getId());
+		
+		AuthorDTO dto = null;
+		if(author != null) {
+			dto = new AuthorDTO();
+			dto.setId(author.getId());
+			dto.setAccountId(author.getAccount().getId());
+			dto.setAddress(author.getAddress());
+			dto.setAvatar(author.getAvatar());
+			dto.setEmail(author.getEmail());
+			dto.setBackCardImg(author.getBackCardImg());
+			dto.setFrontCardImg(author.getFrontCardImg());
+			dto.setCardNo(author.getCardNo());
+			dto.setMotto(author.getMotto());
+			dto.setName(author.getName());
+			dto.setTel(author.getTel());
+		}
+		LOGGER.info("End convertToDto with Author DTO ID: {}", dto.getId());
+		return dto;
+	}
+
 }

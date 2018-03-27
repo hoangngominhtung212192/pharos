@@ -9,11 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pharos.util.EncrytedPasswordUtils;
 import com.pharos.dto.RoleDTO;
 import com.pharos.dto.AccountDTO;
+import com.pharos.dto.MemberDTO;
 import com.pharos.entity.Account;
+import com.pharos.entity.Member;
 import com.pharos.repository.AccountDao;
+import com.pharos.repository.MemberDao;
 import com.pharos.service.AccountService;
 import com.pharos.service.RoleService;
 import com.pharos.transformer.AccountTransformer;
+import com.pharos.transformer.MemberTransformer;
 
 @Service
 @Transactional
@@ -26,6 +30,12 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private RoleService roleService;
 
+	@Autowired
+	private MemberDao memberDAO;
+	
+	@Autowired
+	private MemberTransformer memberTransformer;
+	
 	private static final Logger LOGGER = LogManager.getLogger(AccountServiceImpl.class);
 
 	private EncrytedPasswordUtils passwordUtil;
@@ -118,7 +128,24 @@ public class AccountServiceImpl implements AccountService {
 			accountDTO = accountTransformer.convertToDTO(account);
 		}
 
-		LOGGER.info("Begin findAccountById in Account Service with id ", +id);
+		LOGGER.info("End findAccountById in Account Service with id ", +id);
 		return accountDTO;
+	}
+
+	@Override
+	public MemberDTO findMemberById(int id) {
+		LOGGER.info("Begin findMemberById in Account Service with id ", +id);
+		MemberDTO dto = null;
+		
+		try {
+			Member member = memberDAO.findMemberById(id);
+			
+			dto = memberTransformer.convertToDTO(member);
+		} catch (Exception e) {
+			LOGGER.error("AccountServiceImpl - error: " + e.getMessage());
+		}
+
+		LOGGER.info("End findMemberById in Account Service with id ", +id);
+		return dto;
 	}
 }

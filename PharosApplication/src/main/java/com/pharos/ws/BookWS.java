@@ -38,4 +38,8 @@ public interface BookWS {
 	@GET
 	@RequestMapping(value = "/book/searchByTitle")
 	List<BookDTO> searchByTitle(@RequestParam("title") String title);
+	
+	@GET
+	@RequestMapping(value = "/book/getAllBooksByAuthorId")
+	List<BookDTO> getAllBooksByAuthorId(@RequestParam("authorId") int authorId);
 }

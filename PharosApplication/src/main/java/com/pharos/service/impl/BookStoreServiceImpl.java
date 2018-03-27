@@ -317,4 +317,60 @@ public class BookStoreServiceImpl implements BookStoreService {
 		return null;
 	}
 
+	@Override
+	public List<BookDTO> getAllBookByAuthorId(int authorId) throws BusinessException {
+		
+		LOGGER.info("Begin getAllBookByAuthorId with authorId: " + authorId);
+
+		try {
+
+			List<BookDTO> listBookDTOs = new ArrayList<BookDTO>();
+			List<Book> listBooks = bookDao.getAllBooksByAuthorId(authorId);
+
+			byte[] array = null;
+
+			if (listBooks != null) {
+				for (Book book : listBooks) {
+					BookDTO dto = bookTransformer.convertToDTO(book);
+
+					String sourceDir = book.getPdf();
+					File sourceFile = new File(sourceDir);
+
+					if (sourceFile.exists()) {
+						PDDocument document = PDDocument.load(sourceDir);
+
+						PDPage firstPage = (PDPage) document.getDocumentCatalog().getAllPages().get(0);
+
+						BufferedImage image = firstPage.convertToImage();
+
+						ByteArrayOutputStream bao = new ByteArrayOutputStream();
+
+						ImageIO.write(image, "jpg", bao);
+
+						array = bao.toByteArray();
+
+						bao.close();
+
+						document.close();
+
+						dto.setImage(array);
+					} else {
+						System.err.println(sourceFile.getName() + "--> File does not exist");
+					}
+
+					listBookDTOs.add(dto);
+				}
+
+				LOGGER.info("End searchByTitle with result: " + listBookDTOs);
+
+				return listBookDTOs;
+			}
+
+		} catch (Exception e) {
+			LOGGER.error("BookStoreServiceImpl error: " + e.getMessage());
+		}
+
+		return null;
+	}
+
 }

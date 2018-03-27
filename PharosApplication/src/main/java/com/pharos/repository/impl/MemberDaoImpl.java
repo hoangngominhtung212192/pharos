@@ -19,6 +19,10 @@ public class MemberDaoImpl extends GenericDaoImpl<Member, Integer> implements Me
 
 	private static final Logger LOGGER = LogManager.getLogger(MemberDaoImpl.class);
 
+	public MemberDaoImpl() {
+		super(Member.class);
+	}
+	
 	@Override
 	public Member registration(Member member) {
 		LOGGER.info("Begin registration in Member DAO with Member: {}", member.getFullName());
@@ -46,6 +50,17 @@ public class MemberDaoImpl extends GenericDaoImpl<Member, Integer> implements Me
 
 		}
 		LOGGER.info("End getMemberIdByAccountId in Member DAO with Account : {}", account);
+		return member;
+	}
+
+	@Override
+	public Member findMemberById(int id) {
+		LOGGER.info("Begin findMemberById in Member DAO with id : {}", id);
+		Member member = null;
+
+		member = this.read(id);
+				
+		LOGGER.info("End findMemberById in Member DAO with result : {}", member);
 		return member;
 	}
 

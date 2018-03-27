@@ -10,4 +10,6 @@ public interface AuthorTransformer {
 	public AuthorDTO convertDataToAuthorDto(String data);
 	
 	public Author convertDtoToEntity(AuthorDTO authorDto);
+	
+	public AuthorDTO convertToDto(Author author);
 }
