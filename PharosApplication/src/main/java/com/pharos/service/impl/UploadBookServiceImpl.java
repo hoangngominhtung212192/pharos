@@ -22,7 +22,7 @@ public class UploadBookServiceImpl implements UploadBookService {
 
 
 	private final static String BOOKS_FOLDER = "C:/books/";
-	private final static String CARD_IMAGE_FOLDER = "C:/books/";
+	private final static String CARD_IMAGE_FOLDER = "C:/cardImage/";
 
 	@Override
 	public void uploadBook(BookDTO newBook) {
