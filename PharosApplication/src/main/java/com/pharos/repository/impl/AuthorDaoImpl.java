@@ -16,7 +16,7 @@ public class AuthorDaoImpl extends GenericDaoImpl<Author, Integer> implements Au
 
 	@Override
 	public boolean checkExistEmail(String email) {
-		LOGGER.info("Begin checkExistEmail in Author DAO with email: ", email);
+		LOGGER.info("Begin checkExistEmail in Author DAO with email: "+ email);
 		boolean exist = false;
 		
 		if (email != null) {
@@ -30,7 +30,7 @@ public class AuthorDaoImpl extends GenericDaoImpl<Author, Integer> implements Au
 				exist=true;
 			}
 		}
-		LOGGER.info("End checkExistEmail in Author DAO with result: ", exist);
+		LOGGER.info("End checkExistEmail in Author DAO with result: "+ exist);
 		return exist;
 	}
 

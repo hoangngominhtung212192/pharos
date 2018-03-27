@@ -10,4 +10,6 @@ public interface AccountTransformer {
 	Account convertToEntity(AccountDTO dto);
 
 	AccountDTO convertToDTO(Account account);
+	
+	AccountDTO convertDataToAccountDto(String data, int roleId);
 }

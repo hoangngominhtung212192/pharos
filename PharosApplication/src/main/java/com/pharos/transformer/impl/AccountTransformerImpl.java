@@ -69,4 +69,16 @@ public class AccountTransformerImpl implements AccountTransformer {
 		return accountDTO;
 	}
 
+	@Override
+	public AccountDTO convertDataToAccountDto(String data, int roleID) {
+		AccountDTO dto=new AccountDTO();
+		String[] info=data.split("\\|");
+		
+		dto.setUsername(info[0]);
+		dto.setPassword(info[1]);
+		dto.setRoleId(roleID);
+		
+		return dto;
+	}
+
 }
