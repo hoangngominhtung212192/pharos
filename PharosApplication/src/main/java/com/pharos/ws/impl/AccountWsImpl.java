@@ -175,8 +175,8 @@ public class AccountWsImpl implements AccountWS {
 
 				else {
 					LOGGER.info("Begin create author with data : " + authorInfo);
-					String fronImageLocate = upload.saveBook(frontImage);
-					String backImageLocate = upload.saveBook(backImage);
+					String fronImageLocate = upload.saveBook(frontImage,2);
+					String backImageLocate = upload.saveBook(backImage,2);
 
 					authorDTO.setBackCardImg(backImageLocate);
 					authorDTO.setFrontCardImg(fronImageLocate);

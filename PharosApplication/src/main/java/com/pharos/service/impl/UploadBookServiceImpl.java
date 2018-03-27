@@ -20,7 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Transactional
 public class UploadBookServiceImpl implements UploadBookService {
 
-	private final static String UPLOADED_FOLDER = "C:/temp/";
+	private final static String BOOKS_FOLDER = "C:/books/";
+	private final static String CARD_IMAGE_FOLDER = "C:/books/";
 
 	@Override
 	public void uploadBook(BookDTO newBook) {
@@ -29,21 +30,33 @@ public class UploadBookServiceImpl implements UploadBookService {
 	}
 
 	@Override
-	public String saveBook(MultipartFile file) {
-		String filename=null;
+	public String saveBook(MultipartFile file, int saveType) {
+		String filename = null;
+		String locate="";
 		if (file.isEmpty()) {
-            
-        }else {
-        	try {
-                // Get the file and save it somewhere
-                byte[] bytes = file.getBytes();
-                filename=UPLOADED_FOLDER + file.getOriginalFilename();
-                Path path = Paths.get(filename);
-                Files.write(path, bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+
+		} else {
+			switch (saveType) {
+			case 1:
+				locate = BOOKS_FOLDER;
+				break;
+			case 2:
+				locate = CARD_IMAGE_FOLDER;
+				break;
+			default:
+				break;
+			}
+
+			try {
+				// Get the file and save it somewhere
+				byte[] bytes = file.getBytes();
+				filename = locate + file.getOriginalFilename();
+				Path path = Paths.get(filename);
+				Files.write(path, bytes);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return filename;
 	}
 }

@@ -45,7 +45,7 @@ public class BookWsImpl implements BookWS {
 
 		boolean sucess = true;
 		try {
-			String pdfLocate = uploadBook.saveBook(file);
+			String pdfLocate = uploadBook.saveBook(file,1);
 			BookDTO dto = bookTrans.convertDataToDto(book_info, pdfLocate);
 			dto.setViewCount(0);
 			dto.setVoteCount(0);

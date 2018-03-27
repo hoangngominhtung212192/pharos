@@ -13,5 +13,5 @@ public interface UploadBookService {
 	
 	void uploadBook(BookDTO newBook);
 	
-	String saveBook(MultipartFile file);
+	String saveBook(MultipartFile file, int saveType);
 }
