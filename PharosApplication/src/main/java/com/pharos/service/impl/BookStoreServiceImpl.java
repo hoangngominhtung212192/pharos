@@ -73,7 +73,7 @@ public class BookStoreServiceImpl implements BookStoreService {
 					for (Book book : listBooks) {
 
 						BookDTO dto = bookTransformer.convertToDTO(book);
-						
+
 						String sourceDir = book.getPdf();
 						File sourceFile = new File(sourceDir);
 
@@ -93,7 +93,7 @@ public class BookStoreServiceImpl implements BookStoreService {
 							bao.close();
 
 							document.close();
-							
+
 							dto.setImage(array);
 						} else {
 							System.err.println(sourceFile.getName() + "--> File does not exist");
@@ -116,12 +116,12 @@ public class BookStoreServiceImpl implements BookStoreService {
 
 	@Override
 	public int saveBookInfo(BookDTO bookDTO) {
-		int id=0;
+		int id = 0;
 
 		Book book = bookTransformer.convertToEntity(bookDTO);
 
 		try {
-		id=	bookDao.create(book).getId();
+			id = bookDao.create(book).getId();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -168,7 +168,7 @@ public class BookStoreServiceImpl implements BookStoreService {
 					File sourceFile = new File(sourceDir);
 
 					byte[] imageByteArray = null;
-					
+
 					if (sourceFile.exists()) {
 						PDDocument document = PDDocument.load(sourceDir);
 
@@ -185,13 +185,13 @@ public class BookStoreServiceImpl implements BookStoreService {
 						bao.close();
 
 						document.close();
-						
+
 						dto.setImage(imageByteArray);
 					} else {
 						System.err.println(sourceFile.getName() + "--> File does not exist");
 					}
 				}
-				
+
 				LOGGER.info("End getAllPurchasedBook with result: " + listBookDTOs);
 
 				return listBookDTOs;
@@ -204,20 +204,24 @@ public class BookStoreServiceImpl implements BookStoreService {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pharos.service.BookStoreService#redownloadPurchasedBook_UninstalledApp(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pharos.service.BookStoreService#redownloadPurchasedBook_UninstalledApp(
+	 * int)
 	 */
 	@Override
 	public byte[] readBook(int bookId) throws BusinessException {
-		
+
 		LOGGER.info("Begin readBook_Service with bookId: " + bookId);
-		
+
 		try {
 			Book book = bookDao.getBookById(bookId);
-			
+
 			if (book != null) {
 				BookDTO dto = bookTransformer.convertToDTO(book);
-				
+
 				String pdfUrl = dto.getPdfLocate();
 
 				byte[] buffer = new byte[8192];
@@ -227,7 +231,7 @@ public class BookStoreServiceImpl implements BookStoreService {
 				if (pdfFile.exists()) {
 
 					boolean success = true;
-					
+
 					FileInputStream fis = new FileInputStream(pdfFile);
 
 					ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -237,50 +241,79 @@ public class BookStoreServiceImpl implements BookStoreService {
 					}
 
 					byte[] bytes = baos.toByteArray();
-					
+
 					LOGGER.info("End readBook_Service with result: " + bytes);
-					
+
 					return bytes;
-				}	else {
+				} else {
 					LOGGER.error(pdfFile.getName() + " does not exist !");
 				}
 			}
 		} catch (Exception e) {
 			LOGGER.error("BookStoreServiceImpl error: " + e.getMessage());
 		}
-		
+
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pharos.service.BookStoreService#searchByTitle(java.lang.String)
 	 */
 	@Override
 	public List<BookDTO> searchByTitle(String title) throws BusinessException {
-		
+
 		LOGGER.info("Begin searchByTitle with title: " + title);
-		
+
 		try {
-			
+
 			List<BookDTO> listBookDTOs = new ArrayList<BookDTO>();
 			List<Book> listBooks = bookDao.searchByTitle(title);
-			
+
+			byte[] array = null;
+
 			if (listBooks != null) {
 				for (Book book : listBooks) {
 					BookDTO dto = bookTransformer.convertToDTO(book);
-					
+
+					String sourceDir = book.getPdf();
+					File sourceFile = new File(sourceDir);
+
+					if (sourceFile.exists()) {
+						PDDocument document = PDDocument.load(sourceDir);
+
+						PDPage firstPage = (PDPage) document.getDocumentCatalog().getAllPages().get(0);
+
+						BufferedImage image = firstPage.convertToImage();
+
+						ByteArrayOutputStream bao = new ByteArrayOutputStream();
+
+						ImageIO.write(image, "jpg", bao);
+
+						array = bao.toByteArray();
+
+						bao.close();
+
+						document.close();
+
+						dto.setImage(array);
+					} else {
+						System.err.println(sourceFile.getName() + "--> File does not exist");
+					}
+
 					listBookDTOs.add(dto);
 				}
-				
+
 				LOGGER.info("End searchByTitle with result: " + listBookDTOs);
-				
+
 				return listBookDTOs;
 			}
-			
+
 		} catch (Exception e) {
 			LOGGER.error("BookStoreServiceImpl error: " + e.getMessage());
 		}
-		
+
 		return null;
 	}
 

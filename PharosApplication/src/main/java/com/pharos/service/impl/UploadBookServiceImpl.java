@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Transactional
 public class UploadBookServiceImpl implements UploadBookService {
 
+
 	private final static String BOOKS_FOLDER = "C:/books/";
 	private final static String CARD_IMAGE_FOLDER = "C:/books/";
 
@@ -34,7 +35,6 @@ public class UploadBookServiceImpl implements UploadBookService {
 		String filename = null;
 		String locate="";
 		if (file.isEmpty()) {
-
 		} else {
 			switch (saveType) {
 			case 1:
@@ -57,6 +57,7 @@ public class UploadBookServiceImpl implements UploadBookService {
 				e.printStackTrace();
 			}
 		}
+        
 		return filename;
 	}
 }
