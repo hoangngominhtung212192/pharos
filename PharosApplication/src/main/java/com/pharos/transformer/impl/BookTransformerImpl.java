@@ -101,8 +101,7 @@ public class BookTransformerImpl implements BookTransformer {
 		int typeId=Integer.parseInt(info[1]);
 		float price=Float.parseFloat(info[2]);
 		String description=info[3];
-//		int authorId=Integer.parseInt(info[4]);
-		int authorId=1;
+		int authorId=Integer.parseInt(info[4]);
 		int languageId=Integer.parseInt(info[5]);
 		int statusId=Integer.parseInt(info[6]);
 		Date publishDate=new Date();

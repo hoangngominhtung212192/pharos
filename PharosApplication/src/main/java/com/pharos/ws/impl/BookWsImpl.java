@@ -52,6 +52,7 @@ public class BookWsImpl implements BookWS {
 			dto.setPdfLocate(pdfLocate);
 
 
+
 			int id = bookStoreService.saveBookInfo(dto);
 			int typeId = dto.getTypeId();
 
