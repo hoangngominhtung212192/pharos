@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,7 +139,7 @@ public class AccountWsImpl implements AccountWS {
 
 	@Override
 	public ResponseEntity<ResultResponseDTO> registAuthor(String accountInfo, String authorInfo,
-			MultipartFile frontImage, MultipartFile backImage) {
+			MultipartFile frontImage, MultipartFile backImage, HttpServletRequest request) {
 		ResponseEntity<ResultResponseDTO> response = null;
 		ResultResponseDTO responseDTO = new ResultResponseDTO();
 
@@ -177,8 +179,8 @@ public class AccountWsImpl implements AccountWS {
 
 				else {
 					LOGGER.info("Begin create author with data : " + authorInfo);
-					String fronImageLocate = upload.saveBook(frontImage,2);
-					String backImageLocate = upload.saveBook(backImage,2);
+					String fronImageLocate = upload.saveBook(frontImage,2, request);
+					String backImageLocate = upload.saveBook(backImage,2,request);
 
 					authorDTO.setBackCardImg(backImageLocate);
 					authorDTO.setFrontCardImg(fronImageLocate);

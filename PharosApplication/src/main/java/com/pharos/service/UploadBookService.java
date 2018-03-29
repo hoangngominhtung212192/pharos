@@ -1,5 +1,6 @@
 package com.pharos.service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -13,5 +14,5 @@ public interface UploadBookService {
 	
 	void uploadBook(BookDTO newBook);
 	
-	String saveBook(MultipartFile file, int saveType);
+	String saveBook(MultipartFile file, int saveType, HttpServletRequest request);
 }

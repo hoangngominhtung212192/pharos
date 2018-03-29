@@ -121,7 +121,7 @@ public class BookStoreServiceImpl implements BookStoreService {
 		Book book = bookTransformer.convertToEntity(bookDTO);
 
 		try {
-			id = bookDao.create(book).getId();
+			id = bookDao.CreateNewBook(book);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

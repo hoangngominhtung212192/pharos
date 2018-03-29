@@ -2,6 +2,7 @@ package com.pharos.ws;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 
@@ -29,7 +30,7 @@ public interface AccountWS {
 	@RequestMapping(value = "/author/regist")
 	ResponseEntity<ResultResponseDTO> registAuthor(@RequestParam("accountInfo") String accountInfo,
 			@RequestParam("authorInfo") String authorInfo, @RequestParam("frontImage") MultipartFile frontImage,
-			@RequestParam("backImage") MultipartFile backImage);
+			@RequestParam("backImage") MultipartFile backImage, HttpServletRequest request);
 
 	@GET
 	@RequestMapping(value = "/account/checkAccount")

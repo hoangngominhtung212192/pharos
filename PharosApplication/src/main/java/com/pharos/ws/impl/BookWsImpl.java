@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +41,13 @@ public class BookWsImpl implements BookWS {
 
 	@Override
 
-	public ResponseEntity<ResultResponseDTO> createBook(MultipartFile file, String book_info) {
+	public ResponseEntity<ResultResponseDTO> createBook(MultipartFile file, String book_info, HttpServletRequest request) {
 		ResultResponseDTO resultResponse = new ResultResponseDTO();
 		ResponseEntity<ResultResponseDTO> response = null;
 
 		boolean sucess = true;
 		try {
-			String pdfLocate = uploadBook.saveBook(file,1);
+			String pdfLocate = uploadBook.saveBook(file,1,request);
 			BookDTO dto = bookTrans.convertDataToDto(book_info, pdfLocate);
 			dto.setViewCount(0);
 			dto.setVoteCount(0);
@@ -55,9 +57,7 @@ public class BookWsImpl implements BookWS {
 
 			int id = bookStoreService.saveBookInfo(dto);
 			int typeId = dto.getTypeId();
-
 			sucess = bookTypeService.addBookType(id, typeId);
-			bookStoreService.saveBookInfo(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			sucess = false;

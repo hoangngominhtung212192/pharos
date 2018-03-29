@@ -111,12 +111,23 @@ public class BookDaoImpl extends GenericDaoImpl<Book, Integer> implements BookDa
 
 		Query query = this.entitymanager.createQuery(sql);
 		query.setParameter("authorId", authorId);
-		
+
 		listBooks = query.getResultList();
 
 		LOGGER.info("End searchByTitle with result: " + listBooks);
 
 		return listBooks;
+	}
+
+	@Override
+	public int CreateNewBook(Book book) {
+		LOGGER.info("Begin create new book with Book: " + book);
+
+		Book tmp = this.create(book);
+		int bookId = tmp.getId();
+		
+		LOGGER.info("End CreateNewBook with result: " + tmp);
+		return bookId;
 	}
 
 }

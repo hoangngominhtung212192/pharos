@@ -3,6 +3,7 @@ package com.pharos.ws;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 
@@ -21,7 +22,7 @@ public interface BookWS {
 	@POST
 	@RequestMapping(value = "book/upload")
 	ResponseEntity<ResultResponseDTO> createBook(@RequestParam("file") MultipartFile file,
-			@RequestParam("book_info") String bookInfo);
+			@RequestParam("book_info") String bookInfo, HttpServletRequest request);
 
 	@GET
 	@RequestMapping(value = "/book/getAllBooks")

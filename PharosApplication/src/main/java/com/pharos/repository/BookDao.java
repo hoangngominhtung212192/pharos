@@ -43,4 +43,7 @@ public interface BookDao extends GenericDao<Book, Integer> {
 	 * @return
 	 */
 	List<Book> getAllBooksByAuthorId(int authorId);
+	
+	
+	int CreateNewBook(Book book);
 }
